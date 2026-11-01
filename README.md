@@ -6,21 +6,28 @@ more often when the weights are quantized.
 
 **The prior result.** Patodiya (arXiv 2609.04748) measured this on llama.cpp tag **b10434**:
 - with F16 weights, 37.4% of agentic episodes diverged; with Q4_K_M weights, 82.5% did;
-- routing the 4-bit weights through 16-bit kernels removed the extra divergence;
-- the authors left the cause open.
+- on the same four histories, routing the 4-bit weights through 16-bit kernels gave 33.4% (F16: 37.5%),
+  placing the amplification mainly in the quantized execution path;
+- the authors left open which part of that path is responsible.
 
-**This repository finds the cause and fixes it.**
+**This repository explains why 4- and 5-bit formats diverge more than 8-bit ones, and removes that excess.**
 - **The two kernels.** llama.cpp's CUDA backend runs a one-token kernel (MMVQ) for ≤ 8 tokens, and a batch
   kernel (MMQ) above that. So reused cache entries come from the first, and recomputed ones from the second.
 - **The mismatch.** For every format with a block offset or minimum (Q4_0, Q5_0, Q4_1, Q5_1, Q4_K, Q5_K), the
   two kernels compute the correction term with **different formulas**. One forms it from the sum of the 8-bit
   activation codes; the other from the FP32 sum of the original activations.
-- **Why it amplifies.** The FP32-sum formula is the less accurate one, and it amplifies tiny upstream
-  differences through the 8-bit activation rounding. So the kernels must agree on the code-sum formula;
+- **Why it amplifies.** The FP32-sum formula is the less accurate one, and it passes tiny upstream
+  differences through the 8-bit activation rounding more strongly. It has a larger gain per code flip, and
+  its FP16-rounded sum can jump even when no code flips. So the kernels must agree on the code-sum formula;
   merely agreeing is not enough.
-- **The fix.** One runtime switch (`GGML_PROBE_FLAGS=384`, called **G**) makes both kernels use the code sum.
-  It brings every 4- and 5-bit format down to the 8-bit (Q8_0) divergence level, at no measurable decode cost.
-  This holds on three models on a Turing T4, and on a second GPU generation (Pascal sm_61, one model).
+- **The fix.** One runtime switch (`GGML_PROBE_FLAGS=384`, called **G**) makes both kernels use the code sum
+  (I10). It also makes MMVQ form the Q4_1/Q5_1 scale products in FP32 (I9).
+  - **Results:** it brings every 4- and 5-bit format down to the 8-bit (Q8_0) divergence level, with no
+    decode cost above a few percent. This holds on three models on a Turing T4, and on a second GPU
+    generation (Pascal sm_61, one model).
+  - **Not our invention:** the code sum is the Q8_1 format's own definition. Concurrent public PRs adopted
+    it for accuracy, one of them in both kernels (see the last section). What is ours is the link to cache
+    divergence, the M8 finding, and the measurements.
 
 ## Results at a glance
 
@@ -30,11 +37,11 @@ Tesla T4 unless marked otherwise.
 | What | Upstream b10434 | With the fix G |
 |---|---|---|
 | End-to-end divergence (median max\|Δlogit\|, decode-built vs recomputed cache), 7 quantizations × 3 models, ratio to Q8_0 | 1.51–2.69× | **0.97–1.08×** |
-| Same, Pascal sm_61 (MX330): Q4_0, Q4_1, Q5_1, whose two kernels already *agree* there (operator mismatch 2e-7) | 2.36–3.14× (floor: Q6_K) | **0.98–1.02×** |
+| Same, Pascal sm_61 (MX330): Q4_0, Q4_1, Q5_1, whose two kernels have no systematic mismatch there (median operator mismatch 2e-7) | 2.36–3.14× (floor: Q6_K) | **0.98–1.02×** |
 | Perplexity, decode path − batch path, Qwen2.5-1.5B Q4_0 | +1.16% (z 4.42) | −0.06% |
 | Decode time per token, Q4_0 / Q5_0 / Q4_1 (5 ABBA repeats) | — | +0.9% / −1.2% / +1.1%; interquartile ranges overlap upstream's |
-| Decode time, for comparison: aligning the other way (switch I4) | — | +8.6% |
-| llama-server episodes, cache on vs off (80 MT-Bench episodes × 4 turns, 3 models): episodes that diverged only upstream vs only under G | — | 39 vs 9, exact McNemar p = 1.5e-5 |
+| Decode time, for comparison: aligning the other way (switch I4) | — | +3.8% to +8.6% |
+| llama-server episodes, cache on vs off (80 MT-Bench episodes × 4 turns; Qwen2.5-7B, Qwen2.5-3B, Llama-3.2-3B): episodes that diverged only upstream vs only under G | — | 39 vs 9, exact McNemar p = 1.5e-5; per question, G better on 24 and worse on 3 (sign test p = 4.9e-5) |
 
 **What the fix does not remove:** the larger step from 16-bit to 8-bit. Even Q8_0 diverges, because 8-bit
 activation rounding amplifies a difference between the attention kernels, which no matmul change touches.
@@ -103,7 +110,7 @@ What each one should print:
 |---|---|---|
 | `summarize.py` | The operator decomposition, the M6 test and I8 (switches I1–I8) on Qwen2.5-1.5B | Tables: per-format δ and error vs FP64 per switch, end-to-end divergence, perplexity |
 | `score_4c.py` | Do activation outliers explain why the perplexity gap appears on Qwen2.5-3B but not on Llama-3.2-3B? | All four criteria fail: hypothesis rejected, so the model dependence is reported as unexplained |
-| `score_4d.py` | I9 (FP32 scale products) and I10 (global code sum); the M8 test | C1–C4 pass. Q4_1 end to end: 0.814 upstream → 0.788 with I9 alone (mismatch gone) → 0.349 with I9 + I10. |
+| `score_4d.py` | I9 (FP32 scale products) and I10 (global code sum); the M8 test | C1–C4 pass. Q4_1 end to end: 0.814 upstream → 0.788 with I9 alone (systematic mismatch gone) → 0.349 with I9 + I10. |
 | `score_4f.py` | The fix G on Qwen2.5-1.5B, Qwen2.5-3B, Llama-3.2-3B | F1, F2, F4 pass. F3 fails on 1 of 6 entries: Qwen2.5-3B Q4_1's perplexity gap reverses sign under G (z −2.27). |
 | `score_4g.py` | llama-server episodes; the cost of G (ABBA timing); BF16 precision (I11) | H1 partial, H2, H3, H5 pass; K1–K3 pass; BF1 passes, BF2 fails |
 | `score_4i.py` | Pascal sm_61, numerics only | P1–P4 pass, P5 partial |
@@ -157,7 +164,7 @@ The raw rows to compare against are in `results/kaggle-final/results/matmul_path
 | 1 | I1 | MMQ rounds its FP32 activation scale through FP16, as MMVQ does | M1, the scale-precision split (Q8_0, Q5_0, Q3_K, Q6_K) |
 | 2 | I2 | MMQ quantizes activations with MMVQ's rounding formula | M2, rare one-step code differences |
 | 4 | I4 | MMVQ applies the offset/min correction the way MMQ does (for K-quants that is the *worse* FP32-sum formula) | M4, the formula mismatch |
-| 8 | I5 | MMQ sums each activation block in MMVQ's order | M4b, rare FP16 rounding straddles of the sum |
+| 8 | I5 | MMQ sums each activation block in MMVQ's order | M4b, occasional FP16 rounding straddles of the sum |
 | 16 | I6 | Dense matmuls never use MMVQ | the dispatch split itself |
 | 32 | I7 | MMVQ reproduces MMQ's FP16 K-quant sub-scale products (tensor-core GPUs) | M6, FP16 sub-scale products in tensor-core MMQ |
 | 64 | I8 | MMQ uses the activation code sum for Q4_K/Q5_K | M4 for K-quants, toward the accurate formula |
@@ -230,7 +237,11 @@ python probes/score_4i.py /path/with/space/runs/pascal
 
 - **Determinism.** Every probe is deterministic: repeated runs gave bit-identical results across Kaggle
   accounts, sessions and physical T4s.
-- **The patch at flags 0 is upstream.** Across our four patched builds, results at flags 0 are bit-identical.
+- **The patch at flags 0 runs the original code by construction:** every behavioural edit sits behind its
+  flag bit. Results at flags 0 are bit-identical across our four successive patch versions. We did not
+  compare against an unpatched build.
+- **The 8-token switch.** From 9 tokens up, outputs are bit-identical to the 64-token batch. Batches of 1–8
+  differ from each other only by FP32 rounding, because MMVQ's warp count varies with the batch size.
 - **A different build.** With another CUDA version or driver, expect the last bits to change. The ratios and
   verdicts above are the claims, not the bits.
 - **Pinned libraries on Kaggle.** Jobs pip-install cuBLAS 12.6.0.22 and CUDA runtime 12.6.37, matching the
@@ -242,20 +253,41 @@ python probes/score_4i.py /path/with/space/runs/pascal
 
 ## What is new here, and what is not
 
-Based on our search of the literature and of llama.cpp's issues and pull requests up to October 2026.
+Based on our search of the literature, and of the issues and pull requests of llama.cpp and related
+projects, up to 1 November 2026.
 
 **New, to our knowledge:**
-- the correction-formula mismatch between MMVQ and MMQ (M4), with its operator, real-data and end-to-end
-  consequences;
-- that the formula sets how strongly 8-bit activation rounding amplifies small differences (M8), so the
-  kernels must agree on the *accurate* formula;
-- the global code-sum fix at no measurable cost;
-- the decode-vs-batch perplexity gap and its model dependence;
-- the cross-architecture test on Pascal.
+1. **The specific link to caching.** In MMVQ and MMQ, the correction term is computed with different
+   formulas, per format and GPU (M4). We trace what this does to cache-hit vs recompute divergence: at the
+   operator, on real data, end to end, in perplexity and in episodes. None of the sources below explains
+   decode-vs-prompt divergence through the correction formula.
+2. **M8.** The formula sets how strongly 8-bit activation rounding amplifies small differences, so the
+   kernels must agree on the *accurate* formula. Removing the mismatch alone barely helps, and aligning the
+   obvious way can make things worse.
+3. **The measurements.** The effect of the code sum plus I9 on that divergence, on two GPU generations; the
+   decode-vs-batch perplexity gap and its model dependence; and the cost. I9 removes the last mismatch (M7);
+   we did not test whether it matters once the code sum is in.
 
 **Not ours:**
-- the cache-hit vs recompute divergence itself (Patodiya, arXiv 2609.04748);
-- the FP16 scale products in MMVQ's Q4_1/Q5_1 (M7), already public as llama.cpp issue #30950 (as an overflow);
-- the exact cause of the attention-kernel difference (FP32 vs FP16 query), found by a llama.cpp contributor
-  in issue #25618;
-- the overflow of the FP16 activation-sum field (llama.cpp #21652, #22571).
+- **The cache-hit vs recompute divergence itself:** Patodiya, arXiv 2609.04748.
+- **The code sum itself.** It is the Q8_1 format's own definition (`ggml-common.h`), and it was adopted
+  concurrently for accuracy by:
+  - llama.cpp [PR #31247](https://github.com/ggml-org/llama.cpp/pull/31247) (decode quantizer only; open);
+  - sglang [PR #46428](https://github.com/sgl-project/sglang/pull/46428);
+  - Brontir/NInferno [PR #91](https://github.com/Brontir/NInferno/pull/91), which covers both kernels and was
+    merged on 24 October 2026.
+- **FP32 scale products for Q4_1/Q5_1 (I9's change):** llama.cpp
+  [PR #31019](https://github.com/ggml-org/llama.cpp/pull/31019) (closed unmerged) and NInferno
+  [PR #218](https://github.com/Brontir/NInferno/pull/218) (merged 29 October 2026).
+- **M7 itself,** already public as llama.cpp issue #30950 (as an overflow).
+- **The likely cause of the attention-kernel difference** (FP32 vs FP16 query), found by a llama.cpp
+  contributor in [issue #25618](https://github.com/ggml-org/llama.cpp/issues/25618#issuecomment-6441719728).
+  We did not test that fix. The same thread notes, in general, that batch non-invariance can flip tokens
+  under prefix caching.
+- **The overflow of the FP16 activation-sum field** (llama.cpp #21652, #22571).
+
+**Limitations:**
+- **Untested:** the prior work's RTX 4090; the control for M8 with identical quantizers and formula B; a
+  comparison against an unpatched build.
+- **A different protocol:** our episodes (MT-Bench, 4 requests) differ from the prior work's (BFCL, about 10).
+- **Unexplained:** on the T4, splitting a prompt into two batches already changes logits (Q8_0: 0.35).
