@@ -1,0 +1,36 @@
+[03:42:01] plan=bisect matmul_flags=['0', '47'] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=Q8_0,Q4_0,Q4_1,Q5_0,Q5_1,Q4_K,Q5_K,Q6_K,Q3_K,Q2_K mixes=Q4_K,Q3_K src=qwen2.5-1.5b
+[03:42:28] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[03:42:29] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 48, 10.36 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 48, 9.76 W, 70.00 W, 0x0000000000000001']
+[03:42:32] matmul_paths K=1536 N=1536 flags=0 rc=0 
+[03:42:35] matmul_paths K=1536 N=1536 flags=47 rc=0 
+[03:42:46] matmul_paths K=8960 N=1536 flags=0 rc=0 
+[03:42:58] matmul_paths K=8960 N=1536 flags=47 rc=0 
+[03:43:28] downloaded qwen2.5-1.5b-instruct-fp16.gguf 3.56 GB in 30s
+[03:45:13] kv_bisect Q4_K flags=0 prompt=0 rc=0 
+[03:45:14] kv_bisect Q4_K flags=0 prompt=1 rc=0 
+[03:45:16] kv_bisect Q4_K flags=0 prompt=2 rc=0 
+[03:45:18] kv_bisect Q4_K flags=4 prompt=0 rc=0 
+[03:45:19] kv_bisect Q4_K flags=4 prompt=1 rc=0 
+[03:45:21] kv_bisect Q4_K flags=4 prompt=2 rc=0 
+[03:45:23] kv_bisect Q4_K flags=47 prompt=0 rc=0 
+[03:45:24] kv_bisect Q4_K flags=47 prompt=1 rc=0 
+[03:45:26] kv_bisect Q4_K flags=47 prompt=2 rc=0 
+[03:45:43] kv_bisect Q4_0 flags=0 prompt=0 rc=0 
+[03:45:45] kv_bisect Q4_0 flags=0 prompt=1 rc=0 
+[03:45:46] kv_bisect Q4_0 flags=0 prompt=2 rc=0 
+[03:45:48] kv_bisect Q4_0 flags=4 prompt=0 rc=0 
+[03:45:50] kv_bisect Q4_0 flags=4 prompt=1 rc=0 
+[03:45:51] kv_bisect Q4_0 flags=4 prompt=2 rc=0 
+[03:45:53] kv_bisect Q4_0 flags=47 prompt=0 rc=0 
+[03:45:54] kv_bisect Q4_0 flags=47 prompt=1 rc=0 
+[03:45:56] kv_bisect Q4_0 flags=47 prompt=2 rc=0 
+[03:46:16] kv_bisect Q8_0 flags=0 prompt=0 rc=0 
+[03:46:18] kv_bisect Q8_0 flags=0 prompt=1 rc=0 
+[03:46:20] kv_bisect Q8_0 flags=0 prompt=2 rc=0 
+[03:46:22] kv_bisect Q8_0 flags=4 prompt=0 rc=0 
+[03:46:23] kv_bisect Q8_0 flags=4 prompt=1 rc=0 
+[03:46:25] kv_bisect Q8_0 flags=4 prompt=2 rc=0 
+[03:46:27] kv_bisect Q8_0 flags=47 prompt=0 rc=0 
+[03:46:29] kv_bisect Q8_0 flags=47 prompt=1 rc=0 
+[03:46:31] kv_bisect Q8_0 flags=47 prompt=2 rc=0 
+[03:46:31] done

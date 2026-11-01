@@ -1,0 +1,53 @@
+[08:58:19] plan=close matmul_flags=[] kv_flags=['0', '384'] ppl_flags=['0', '384'] ppl_chunks=24 formats=Q8_0,Q4_0,Q5_0,Q4_1,Q5_1,Q4_K,Q5_K mixes=Q4_K src=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00001-of-00002.gguf,https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00002-of-00002.gguf
+[08:58:44] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[08:58:46] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 44, 11.61 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 45, 10.81 W, 70.00 W, 0x0000000000000001']
+[08:59:48] downloaded 2 part(s) of qwen2.5-3b-instruct-fp16-00001-of-00002.gguf in 62s
+[09:00:08] kv_paths Q3B_F16 flags=0 rc=0 20s clocks[1590 MHz, 54, 38.56 W, 0x0000000000000000] 
+[09:03:55] ppl_paths Q3B_F16 flags=0 rc=0 226s clocks[1590 MHz, 76, 47.90 W, 0x0000000000000000] 
+[09:08:35] ppl_paths Q3B_F16_cublas_f32 flags=0 rc=0 281s clocks[1590 MHz, 76, 52.76 W, 0x0000000000000000] 
+[09:09:11] kv_paths Q3B_F16_cublas_f32 flags=0 rc=0 35s clocks[1590 MHz, 77, 47.14 W, 0x0000000000000000] 
+[09:09:43] quantized Q3B_Q8_0 in 33s (3.62 GB)
+[09:10:02] kv_paths Q3B_Q8_0 flags=0 rc=0 19s clocks[1590 MHz, 72, 46.55 W, 0x0000000000000000] 
+[09:10:16] kv_paths Q3B_Q8_0 flags=384 rc=0 13s clocks[1590 MHz, 75, 46.65 W, 0x0000000000000000] 
+[09:12:42] ppl_paths Q3B_Q8_0 flags=384 rc=0 147s clocks[1590 MHz, 76, 46.88 W, 0x0000000000000000] 
+[09:15:07] ppl_paths Q3B_Q8_0 flags=0 rc=0 145s clocks[1590 MHz, 76, 46.68 W, 0x0000000000000000] 
+[09:15:35] quantized Q3B_Q4_0 in 27s (1.92 GB)
+[09:15:45] kv_paths Q3B_Q4_0 flags=384 rc=0 10s clocks[1590 MHz, 72, 47.37 W, 0x0000000000000000] 
+[09:15:55] kv_paths Q3B_Q4_0 flags=0 rc=0 10s clocks[1590 MHz, 75, 46.68 W, 0x0000000000000000] 
+[09:17:36] ppl_paths Q3B_Q4_0 flags=0 rc=0 101s clocks[1590 MHz, 76, 47.27 W, 0x0000000000000000] 
+[09:19:18] ppl_paths Q3B_Q4_0 flags=384 rc=0 101s clocks[1590 MHz, 76, 47.86 W, 0x0000000000000000] 
+[09:19:48] quantized Q3B_Q5_0 in 30s (2.34 GB)
+[09:19:59] kv_paths Q3B_Q5_0 flags=384 rc=0 11s clocks[1425 MHz, 72, 42.31 W, 0x0000000000000000] 
+[09:20:11] kv_paths Q3B_Q5_0 flags=0 rc=0 11s clocks[1590 MHz, 75, 46.71 W, 0x0000000000000000] 
+[09:22:13] ppl_paths Q3B_Q5_0 flags=0 rc=0 122s clocks[1590 MHz, 77, 47.46 W, 0x0000000000000000] 
+[09:24:13] ppl_paths Q3B_Q5_0 flags=384 rc=0 121s clocks[1455 MHz, 77, 42.71 W, 0x0000000000000000] 
+[09:24:41] quantized Q3B_Q4_1 in 27s (2.13 GB)
+[09:24:51] kv_paths Q3B_Q4_1 flags=384 rc=0 10s clocks[1590 MHz, 72, 47.27 W, 0x0000000000000000] 
+[09:25:01] kv_paths Q3B_Q4_1 flags=128 rc=0 10s clocks[1530 MHz, 75, 46.22 W, 0x0000000000000000] 
+[09:25:11] kv_paths Q3B_Q4_1 flags=0 rc=0 10s clocks[1560 MHz, 77, 46.88 W, 0x0000000000000000] 
+[09:26:50] ppl_paths Q3B_Q4_1 flags=384 rc=0 100s clocks[1590 MHz, 77, 46.97 W, 0x0000000000000000] 
+[09:28:29] ppl_paths Q3B_Q4_1 flags=128 rc=0 99s clocks[1590 MHz, 76, 48.94 W, 0x0000000000000000] 
+[09:30:08] ppl_paths Q3B_Q4_1 flags=0 rc=0 99s clocks[1590 MHz, 76, 46.97 W, 0x0000000000000000] 
+[09:30:38] quantized Q3B_Q5_1 in 30s (2.55 GB)
+[09:30:49] kv_paths Q3B_Q5_1 flags=128 rc=0 11s clocks[1515 MHz, 72, 44.74 W, 0x0000000000000000] 
+[09:31:00] kv_paths Q3B_Q5_1 flags=384 rc=0 11s clocks[1590 MHz, 75, 46.78 W, 0x0000000000000000] 
+[09:31:12] kv_paths Q3B_Q5_1 flags=0 rc=0 11s clocks[1590 MHz, 77, 48.61 W, 0x0000000000000000] 
+[09:33:07] ppl_paths Q3B_Q5_1 flags=0 rc=0 115s clocks[1590 MHz, 77, 48.15 W, 0x0000000000000000] 
+[09:35:01] ppl_paths Q3B_Q5_1 flags=128 rc=0 115s clocks[1590 MHz, 77, 46.31 W, 0x0000000000000000] 
+[09:36:56] ppl_paths Q3B_Q5_1 flags=384 rc=0 115s clocks[1590 MHz, 76, 46.02 W, 0x0000000000000000] 
+[09:40:13] quantized Q3B_Q4_K in 196s (1.92 GB)
+[09:40:23] kv_paths Q3B_Q4_K flags=384 rc=0 10s clocks[1590 MHz, 59, 39.86 W, 0x0000000000000000] 
+[09:40:32] kv_paths Q3B_Q4_K flags=0 rc=0 10s clocks[1590 MHz, 62, 41.50 W, 0x0000000000000000] 
+[09:42:20] ppl_paths Q3B_Q4_K flags=0 rc=0 108s clocks[1590 MHz, 77, 47.63 W, 0x0000000000000000] 
+[09:44:14] ppl_paths Q3B_Q4_K flags=384 rc=0 114s clocks[1530 MHz, 76, 46.78 W, 0x0000000000000000] 
+[09:46:59] quantized Q3B_Q5_K in 165s (2.34 GB)
+[09:47:09] kv_paths Q3B_Q5_K flags=0 rc=0 10s clocks[1590 MHz, 58, 38.70 W, 0x0000000000000000] 
+[09:47:19] kv_paths Q3B_Q5_K flags=384 rc=0 10s clocks[1590 MHz, 62, 40.84 W, 0x0000000000000000] 
+[09:49:28] ppl_paths Q3B_Q5_K flags=384 rc=0 129s clocks[1320 MHz, 75, 39.59 W, 0x0000000000000000] 
+[09:51:51] ppl_paths Q3B_Q5_K flags=0 rc=0 143s clocks[1425 MHz, 76, 41.53 W, 0x0000000000000000] 
+[09:54:43] quantized Q3B_Q4_K_M in 171s (2.10 GB)
+[09:54:53] kv_paths Q3B_Q4_K_M flags=0 rc=0 10s clocks[1590 MHz, 58, 40.57 W, 0x0000000000000000] 
+[09:55:03] kv_paths Q3B_Q4_K_M flags=384 rc=0 10s clocks[1590 MHz, 61, 39.49 W, 0x0000000000000000] 
+[09:57:05] ppl_paths Q3B_Q4_K_M flags=0 rc=0 122s clocks[1185 MHz, 75, 39.49 W, 0x0000000000000000] 
+[09:59:15] ppl_paths Q3B_Q4_K_M flags=384 rc=0 130s clocks[1380 MHz, 76, 41.92 W, 0x0000000000000000] 
+[09:59:15] done

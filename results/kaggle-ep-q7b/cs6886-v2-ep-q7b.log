@@ -1,0 +1,25 @@
+[{"stream_name":"stdout","time":0.843821379,"data":"[13:55:27] plan=episodes7b matmul_flags=[] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=Q8_0,Q4_K_M,Q4_0 mixes=Q4_K,Q3_K src=qwen2.5-1.5b\n"}
+,{"stream_name":"stdout","time":28.573019005,"data":"[13:55:55] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -\u003e rc=0 \n"}
+,{"stream_name":"stdout","time":29.723304827,"data":"[13:55:56] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 45, 10.24 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 46, 11.82 W, 70.00 W, 0x0000000000000001']\n"}
+,{"stream_name":"stdout","time":30.402502945,"data":"[13:55:56] episodes: 80 x 4 requests, n_predict=384, follow-ups=('Thank you. Now summarize everything you have said so far in three sentences.', 'Finally, list three questions a curious reader might ask next, each with a one-line answer.')\n"}
+,{"stream_name":"stdout","time":106.390645329,"data":"[13:57:12] downloaded Qwen2.5-7B Q8_0 (3 parts) in 76s\n"}
+,{"stream_name":"stdout","time":2309.454070364,"data":"[14:33:55] episodes Q7B_Q8_0 flags=0 arm=cache ok 2203s clocks[300 MHz, 42, 9.55 W, 0x0000000000000001] -\u003e [1590 MHz, 75, 42.39 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":4621.508155103,"data":"[15:12:28] episodes Q7B_Q8_0 flags=0 arm=recompute ok 2312s clocks[1590 MHz, 75, 42.39 W, 0x0000000000000000] -\u003e [1590 MHz, 77, 42.49 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":4670.284395406,"data":"[15:13:16] downloaded Qwen2.5-7B Q4_K_M (2 parts) in 48s\n"}
+,{"stream_name":"stdout","time":6638.46901747,"data":"[15:46:04] episodes Q7B_Q4_K_M flags=0 arm=cache ok 1968s clocks[300 MHz, 60, 10.75 W, 0x0000000000000001] -\u003e [1590 MHz, 76, 42.09 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":8717.442210626,"data":"[16:20:43] episodes Q7B_Q4_K_M flags=0 arm=recompute ok 2079s clocks[1590 MHz, 76, 42.09 W, 0x0000000000000000] -\u003e [1590 MHz, 74, 42.58 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":10704.573168898,"data":"[16:53:51] episodes Q7B_Q4_K_M flags=384 arm=cache ok 1987s clocks[1590 MHz, 74, 41.80 W, 0x0000000000000000] -\u003e [1590 MHz, 75, 43.30 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":12792.409095184,"data":"[17:28:38] episodes Q7B_Q4_K_M flags=384 arm=recompute ok 2088s clocks[1590 MHz, 75, 41.72 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 41.62 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":12833.710153236,"data":"[17:29:20] downloaded Qwen2.5-7B Q4_0 (2 parts) in 41s\n"}
+,{"stream_name":"stdout","time":14340.450058026,"data":"[17:54:26] episodes Q7B_Q4_0 flags=0 arm=cache ok 1507s clocks[300 MHz, 62, 10.75 W, 0x0000000000000001] -\u003e [1590 MHz, 75, 43.27 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":15928.902243907,"data":"[18:20:55] episodes Q7B_Q4_0 flags=0 arm=recompute ok 1588s clocks[1590 MHz, 75, 43.27 W, 0x0000000000000000] -\u003e [1590 MHz, 75, 44.95 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":17415.535857005,"data":"[18:45:42] episodes Q7B_Q4_0 flags=384 arm=cache ok 1487s clocks[1590 MHz, 74, 44.95 W, 0x0000000000000000] -\u003e [1590 MHz, 77, 43.74 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":19008.231863402,"data":"[19:12:14] episodes Q7B_Q4_0 flags=384 arm=recompute ok 1593s clocks[1590 MHz, 77, 43.74 W, 0x0000000000000000] -\u003e [1590 MHz, 75, 43.67 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":19008.944250507,"data":"[19:12:15] done\n"}
+,{"stream_name":"stderr","time":19011.316862942,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":19011.316891122,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":19011.680377262,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":19011.680414068,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":19012.803987918,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":19014.263891324,"data":"[NbConvertApp] Writing 443257 bytes to __results__.html\n"}
+]

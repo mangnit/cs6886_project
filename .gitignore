@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+
+# Downloaded and generated, never committed
+third_party/*
+!third_party/README.md
+build/
+work/
+models/
+*.gguf
+.kaggle_staging/
+.kaggle_incoming/
+
+# Windows/WSL alternate-data-stream files
+*:Zone.Identifier

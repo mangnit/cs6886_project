@@ -1,0 +1,10 @@
+[2026-10-29 11:19:51 IST] build sm_61 (native: DP4A MMQ, no MMA, no FAST_FP16)
+[2026-10-29 11:21:40 IST] build rc=0
+-rwxrwxrwx 1 summa summa 3560416288 Oct 29 05:32 /mnt/d/cs6886_work/models/qwen2.5-1.5b-instruct-fp16.gguf
+[2026-10-29 11:21:40 IST] operator probe (P1, P2)
+[2026-10-29 11:21:46 IST] matmul_paths flags=0 rc=0
+[2026-10-29 11:21:50 IST] matmul_paths flags=4 rc=0
+[2026-10-29 11:21:55 IST] matmul_paths flags=128 rc=0
+[2026-10-29 11:21:59 IST] matmul_paths flags=256 rc=0
+[2026-10-29 11:22:03 IST] matmul_paths flags=384 rc=0
+[2026-10-29 11:22:03 IST] close plan (P3-P5), Q6_K floor; no Q8_0 or F16 reference runs (they spill past 2 GB and take hours)

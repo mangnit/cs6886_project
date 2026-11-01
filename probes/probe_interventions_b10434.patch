@@ -1,0 +1,432 @@
+--- a/ggml/src/ggml-cuda/quantize.cu
++++ b/ggml/src/ggml-cuda/quantize.cu
+@@ -1,4 +1,16 @@
+ #include "quantize.cuh"
++#include <cstdlib>
++
++// [cs6886 probe] intervention flags; 0 = upstream behaviour (docs/PROJECT.md)
++static __constant__ int ggml_probe_quant_flags;
++static int ggml_probe_quant_host_flags = 0;
++
++void ggml_cuda_probe_init_quant(void) {
++    const char * e = getenv("GGML_PROBE_FLAGS");
++    const int f = e ? atoi(e) : 0;
++    ggml_probe_quant_host_flags = f;
++    CUDA_CHECK(cudaMemcpyToSymbol(ggml_probe_quant_flags, &f, sizeof(int)));
++}
+ #include <cstdint>
+ 
+ #if defined(BLACKWELL_MMA_AVAILABLE)
+@@ -90,6 +102,9 @@
+ 
+     const float  d = amax / 127.0f;
+     const int8_t q = amax == 0.0f ? 0 : roundf(xi / d);
++    if (ggml_probe_quant_flags & 256) { // I10: code sum, the consistent formulation
++        sum = warp_reduce_sum<QK8_1>((float) q) * __half2float(__float2half(d));
++    }
+ 
+     y[ib].qs[iqs] = q;
+ 
+@@ -97,6 +112,10 @@
+         return;
+     }
+ 
++    if (ggml_probe_quant_flags & 512) { // I11
++        y[ib].ds = make_half2(__bfloat162float(__float2bfloat16(d)), __bfloat162float(__float2bfloat16(sum)));
++        return;
++    }
+     y[ib].ds = make_half2(d, sum);
+ }
+ 
+@@ -458,7 +477,7 @@
+ static __global__ void quantize_mmq_q8_1(
+         const float * __restrict__ x, const int32_t * __restrict__ ids, void * __restrict__ vy,
+         const int64_t ne00, const int64_t s01, const int64_t s02, const int64_t s03,
+-        const int64_t ne0, const int ne1, const int ne2, const int n_expert_used) {
++        const int64_t ne0, const int ne1, const int ne2, const int n_expert_used, const int code_sum = 0) {
+ 
+     constexpr int vals_per_scale = ds_layout == MMQ_Q8_1_DS_LAYOUT_D2S6 ? 64 : 32;
+     constexpr int vals_per_sum   = ds_layout == MMQ_Q8_1_DS_LAYOUT_D2S6 ? 16 : 32;
+@@ -503,6 +522,17 @@
+ 
+     float sum;
+     if (ds_layout != MMQ_Q8_1_DS_LAYOUT_D4) {
++        if (vals_per_sum == 32 && (ggml_probe_quant_flags & 8)) { // I5
++            float c0 = xi.x, c1 = xi.y, c2 = xi.z, c3 = xi.w;
++#pragma unroll
++            for (int offset = 4; offset > 0; offset >>= 1) {
++                c0 += __shfl_xor_sync(0xFFFFFFFF, c0, offset, WARP_SIZE);
++                c1 += __shfl_xor_sync(0xFFFFFFFF, c1, offset, WARP_SIZE);
++                c2 += __shfl_xor_sync(0xFFFFFFFF, c2, offset, WARP_SIZE);
++                c3 += __shfl_xor_sync(0xFFFFFFFF, c3, offset, WARP_SIZE);
++            }
++            sum = (c0 + c2) + (c1 + c3);
++        } else {
+         sum = xi.x + xi.y + xi.z + xi.w;
+ 
+         // Calculate sums across vals_per_sum/4 threads.
+@@ -510,15 +540,33 @@
+         for (int offset = vals_per_sum/8; offset > 0; offset >>= 1) {
+             sum += __shfl_xor_sync(0xFFFFFFFF, sum, offset, WARP_SIZE);
+         }
++        }
+     }
+ 
+-    const float d_inv = 127.0f / amax;
+     char4 q;
++    float d;
++    if (ggml_probe_quant_flags & 2) { // I2: MMVQ formula
++        d = amax / 127.0f;
++        q.x = amax == 0.0f ? 0 : roundf(xi.x / d);
++        q.y = amax == 0.0f ? 0 : roundf(xi.y / d);
++        q.z = amax == 0.0f ? 0 : roundf(xi.z / d);
++        q.w = amax == 0.0f ? 0 : roundf(xi.w / d);
++    } else {
++    const float d_inv = 127.0f / amax;
+     q.x = roundf(xi.x*d_inv);
+     q.y = roundf(xi.y*d_inv);
+     q.z = roundf(xi.z*d_inv);
+     q.w = roundf(xi.w*d_inv);
+-    const float d = 1.0f / d_inv;
++    d = 1.0f / d_inv;
++    }
++    if (code_sum && ds_layout == MMQ_Q8_1_DS_LAYOUT_DS4) { // I8: sum of codes, as MMVQ uses
++        int isum = (int) q.x + (int) q.y + (int) q.z + (int) q.w;
++#pragma unroll
++        for (int offset = 4; offset > 0; offset >>= 1) {
++            isum += __shfl_xor_sync(0xFFFFFFFF, isum, offset, WARP_SIZE);
++        }
++        sum = __half2float(__float2half(d)) * (float) isum;
++    }
+ 
+     // write the block once (normal) or to each of the token's compact rows (scatter)
+     const int nwrite = scatter ? n_expert_used : 1;
+@@ -546,9 +594,11 @@
+             }
+         } else if (iqs % 32 == 0) {
+             if (ds_layout == MMQ_Q8_1_DS_LAYOUT_DS4) {
+-                y[ib].ds4[iqs/32] = make_half2(d, sum);
++                y[ib].ds4[iqs/32] = (ggml_probe_quant_flags & 512) // I11
++                    ? make_half2(__bfloat162float(__float2bfloat16(d)), __bfloat162float(__float2bfloat16(sum)))
++                    : make_half2(d, sum);
+             } else {
+-                y[ib].d4[iqs/32]  = d;
++                y[ib].d4[iqs/32]  = (ggml_probe_quant_flags & 1) ? __half2float(__float2half(d)) : d; // I1
+             }
+         }
+     }
+@@ -583,18 +633,19 @@
+     const int64_t block_num_y = (ne0 + 4*CUDA_QUANTIZE_BLOCK_SIZE_MMQ - 1) / (4*CUDA_QUANTIZE_BLOCK_SIZE_MMQ);
+     const dim3 num_blocks(ne1, block_num_y, ne2*ne3);
+     const dim3 block_size(CUDA_QUANTIZE_BLOCK_SIZE_MMQ, 1, 1);
++    const int code_sum = ((ggml_probe_quant_host_flags & 64) && (type_src0 == GGML_TYPE_Q4_K || type_src0 == GGML_TYPE_Q5_K)) || (ggml_probe_quant_host_flags & 256); // I8, I10
+     switch (mmq_get_q8_1_ds_layout(type_src0)) {
+         case MMQ_Q8_1_DS_LAYOUT_D4:
+             quantize_mmq_q8_1<MMQ_Q8_1_DS_LAYOUT_D4, false>
+-                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0);
++                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0, code_sum);
+             break;
+         case MMQ_Q8_1_DS_LAYOUT_DS4:
+             quantize_mmq_q8_1<MMQ_Q8_1_DS_LAYOUT_DS4, false>
+-                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0);
++                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0, code_sum);
+             break;
+         case MMQ_Q8_1_DS_LAYOUT_D2S6:
+             quantize_mmq_q8_1<MMQ_Q8_1_DS_LAYOUT_D2S6, false>
+-                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0);
++                <<<num_blocks, block_size, 0, stream>>>(x, ids, vy, ne00, s01, s02, s03, ne0, ne1, ne2, /*n_expert_used=*/0, code_sum);
+             break;
+         default:
+             GGML_ABORT("fatal error");
+--- a/ggml/src/ggml-cuda/quantize.cuh
++++ b/ggml/src/ggml-cuda/quantize.cuh
+@@ -3,6 +3,8 @@
+ #include "common.cuh"
+ #include "mmq.cuh"
+ 
++void ggml_cuda_probe_init_quant(void); // [cs6886 probe]
++
+ #include <cstdint>
+ 
+ #define CUDA_QUANTIZE_BLOCK_SIZE     256
+--- a/ggml/src/ggml-cuda/vecdotq.cuh
++++ b/ggml/src/ggml-cuda/vecdotq.cuh
+@@ -2,6 +2,9 @@
+ 
+ #include "common.cuh"
+ 
++// [cs6886 probe] decode-kernel intervention flags (set in mmvq.cu; zero in every other TU)
++static __constant__ int ggml_probe_mmvq_flags;
++
+ #include <cstdint>
+ 
+ static __device__ __forceinline__ int get_int_b1(const void * x, const int & i32) {
+@@ -155,9 +158,17 @@
+     }
+ 
+ #ifdef FAST_FP16_AVAILABLE
++    float d4d8, m4s8;
++    if (ggml_probe_mmvq_flags & 128) { // I9: FP32 scale products, as MMQ
++        const float2 dm4f_ = __half22float2(dm4);
++        const float2 ds8f_ = __half22float2(ds8);
++        d4d8 = dm4f_.x * ds8f_.x;
++        m4s8 = dm4f_.y * ds8f_.y;
++    } else {
+     const float2 tmp = __half22float2(__hmul2(dm4, ds8));
+-    const float d4d8 = tmp.x;
+-    const float m4s8 = tmp.y;
++    d4d8 = tmp.x;
++    m4s8 = tmp.y;
++    }
+ #else
+     const float2 dm4f = __half22float2(dm4);
+     const float2 ds8f = __half22float2(ds8);
+@@ -226,9 +237,17 @@
+     }
+ 
+ #ifdef FAST_FP16_AVAILABLE
++    float d5d8, m5s8;
++    if (ggml_probe_mmvq_flags & 128) { // I9: FP32 scale products, as MMQ
++        const float2 dm5f_ = __half22float2(dm5);
++        const float2 ds8f_ = __half22float2(ds8);
++        d5d8 = dm5f_.x * ds8f_.x;
++        m5s8 = dm5f_.y * ds8f_.y;
++    } else {
+     const float2 tmp = __half22float2(__hmul2(dm5, ds8));
+-    const float d5d8 = tmp.x;
+-    const float m5s8 = tmp.y;
++    d5d8 = tmp.x;
++    m5s8 = tmp.y;
++    }
+ #else
+     const float2 dm5f = __half22float2(dm5);
+     const float2 ds8f = __half22float2(ds8);
+@@ -507,7 +526,8 @@
+ // contiguous v/x values
+ static __device__ __forceinline__ float vec_dot_q4_K_q8_1_impl_vmmq(
+     const int * __restrict__ v, const int * __restrict__ u, const uint8_t * __restrict__ sc,
+-    const uint8_t * __restrict__ m, const half2 & dm4, const float * __restrict__ d8) {
++    const uint8_t * __restrict__ m, const half2 & dm4, const float * __restrict__ d8,
++    const float * __restrict__ s8 = nullptr) {
+ 
+     float sumf_d = 0.0f;
+     float sumf_m = 0.0f;
+@@ -521,7 +541,11 @@
+         const int dot2 = ggml_cuda_dp4a(0x01010101, u[2*i+1], ggml_cuda_dp4a(0x01010101, u[2*i+0], 0)); // sum of u
+ 
+         sumf_d += d8[i] * (dot1 * sc[i]);
+-        sumf_m += d8[i] * (dot2 * m[i]);  // multiply constant part of q4_K with sum of q8_1 values
++        if (s8 != nullptr) { // I4
++            sumf_m += (0.25f*s8[i]) * m[i];
++        } else {
++        sumf_m += d8[i] * (dot2 * m[i]);
++        }
+     }
+ 
+     const float2 dm4f = __half22float2(dm4);
+@@ -563,7 +587,8 @@
+ // contiguous v/x values
+ static __device__ __forceinline__ float vec_dot_q5_K_q8_1_impl_vmmq(
+     const int * __restrict__ vl, const int * __restrict__ vh, const int * __restrict__ u, const uint8_t * __restrict__ sc,
+-    const uint8_t * __restrict__ m, const half2 & dm5, const float * __restrict__ d8) {
++    const uint8_t * __restrict__ m, const half2 & dm5, const float * __restrict__ d8,
++    const float * __restrict__ s8 = nullptr) {
+ 
+     float sumf_d = 0.0f;
+     float sumf_m = 0.0f;
+@@ -583,8 +608,11 @@
+         const int dot2 = ggml_cuda_dp4a(0x01010101, u[2*i+0], ggml_cuda_dp4a(0x01010101, u[2*i+1], 0)); // sum of u
+ 
+         sumf_d += d8[i] * (dot1 * sc[i]);
++        if (s8 != nullptr) { // I4
++            sumf_m += (0.25f*s8[i]) * m[i];
++        } else {
+         sumf_m += d8[i] * (dot2 * m[i]);
+-
++        }
+     }
+ 
+     const float2 dm5f = __half22float2(dm5);
+@@ -763,6 +791,74 @@
+     return d2 * d8 * sumi;
+ }
+ 
++// [cs6886 probe] I4 helpers: offset/min correction applied the way MMQ applies it.
++template <int vdr> static __device__ __forceinline__ float probe_q4_0_codesum(
++    const int * v, const int * u, const float & d4, const half2 & ds8) {
++    int sumi = 0;
++#pragma unroll
++    for (int i = 0; i < vdr; ++i) {
++        const int vi0 = __vsubss4((v[i] >> 0) & 0x0F0F0F0F, 0x08080808);
++        const int vi1 = __vsubss4((v[i] >> 4) & 0x0F0F0F0F, 0x08080808);
++        sumi = ggml_cuda_dp4a(vi0, u[2*i+0], sumi);
++        sumi = ggml_cuda_dp4a(vi1, u[2*i+1], sumi);
++    }
++    return d4 * (sumi * __low2float(ds8));
++}
++
++template <int vdr> static __device__ __forceinline__ float probe_q5_0_codesum(
++    const int * vl, const int * vh, const int * u, const float & d5, const half2 & ds8) {
++    int sumi = 0;
++#pragma unroll
++    for (int i = 0; i < vdr; ++i) {
++        int vi0 = (vl[i] >>  0) & 0x0F0F0F0F;
++        vi0    |= (vh[i] <<  4) & 0x00000010;
++        vi0    |= (vh[i] << 11) & 0x00001000;
++        vi0    |= (vh[i] << 18) & 0x00100000;
++        vi0    |= (vh[i] << 25) & 0x10000000;
++        sumi = ggml_cuda_dp4a(__vsubss4(vi0, 0x10101010), u[2*i+0], sumi);
++        int vi1 = (vl[i] >>  4) & 0x0F0F0F0F;
++        vi1    |= (vh[i] >> 12) & 0x00000010;
++        vi1    |= (vh[i] >>  5) & 0x00001000;
++        vi1    |= (vh[i] <<  2) & 0x00100000;
++        vi1    |= (vh[i] <<  9) & 0x10000000;
++        sumi = ggml_cuda_dp4a(__vsubss4(vi1, 0x10101010), u[2*i+1], sumi);
++    }
++    return d5 * (sumi * __low2float(ds8));
++}
++
++// [cs6886 probe] I7: reproduce MMQ-MMA exactly for Q4_K/Q5_K: the sub-block scale
++// products d*sc and dmin*m are formed in FP16 (mmq-load-tiles: dm*make_half2(sc, m))
++// and the min term uses the FP32 activation sum (as I4).
++static __device__ __forceinline__ float probe_q4_K_m6(
++    const int * v, const int * u, const uint8_t * sc, const uint8_t * m, const half2 & dm4,
++    const float * d8, const float * s8) {
++    float sumf = 0.0f;
++#pragma unroll
++    for (int i = 0; i < QR4_K; ++i) {
++        const int v0i = (v[0] >> (4*i)) & 0x0F0F0F0F;
++        const int v1i = (v[1] >> (4*i)) & 0x0F0F0F0F;
++        const int dot1 = ggml_cuda_dp4a(v1i, u[2*i+1], ggml_cuda_dp4a(v0i, u[2*i+0], 0));
++        const float2 dmi = __half22float2(dm4 * make_half2(sc[i], m[i]));
++        sumf += dmi.x * d8[i] * dot1 - dmi.y * (0.25f*s8[i]);
++    }
++    return sumf;
++}
++
++static __device__ __forceinline__ float probe_q5_K_m6(
++    const int * vl, const int * vh, const int * u, const uint8_t * sc, const uint8_t * m, const half2 & dm5,
++    const float * d8, const float * s8) {
++    float sumf = 0.0f;
++#pragma unroll
++    for (int i = 0; i < QR5_K; ++i) {
++        const int v0i = ((vl[0] >> (4*i)) & 0x0F0F0F0F) | (((vh[0] >> i) << 4) & 0x10101010);
++        const int v1i = ((vl[1] >> (4*i)) & 0x0F0F0F0F) | (((vh[1] >> i) << 4) & 0x10101010);
++        const int dot1 = ggml_cuda_dp4a(v0i, u[2*i+0], ggml_cuda_dp4a(v1i, u[2*i+1], 0));
++        const float2 dmi = __half22float2(dm5 * make_half2(sc[i], m[i]));
++        sumf += dmi.x * d8[i] * dot1 - dmi.y * (0.25f*s8[i]);
++    }
++    return sumf;
++}
++
+ static __device__ __forceinline__ float vec_dot_q4_0_q8_1(
+     const void * __restrict__ vbq, const block_q8_1 * __restrict__ bq8_1, const int & kbx, const int & iqs) {
+ 
+@@ -778,6 +874,11 @@
+         u[2*i+1] = get_int_b4(bq8_1->qs, iqs + i + QI4_0);
+     }
+ 
++#if defined(TURING_MMA_AVAILABLE)
++    if (ggml_probe_mmvq_flags & 4) { // I4
++        return probe_q4_0_codesum<VDR_Q4_0_Q8_1_MMVQ>(v, u, bq4_0->d, bq8_1->ds);
++    }
++#endif
+     return vec_dot_q4_0_q8_1_impl<VDR_Q4_0_Q8_1_MMVQ>(v, u, bq4_0->d, bq8_1->ds);
+ }
+ 
+@@ -817,6 +918,9 @@
+         u[2*i+1] = get_int_b4(bq8_1->qs, iqs + i + QI5_0);
+     }
+ 
++    if (ggml_probe_mmvq_flags & 4) { // I4
++        return probe_q5_0_codesum<VDR_Q5_0_Q8_1_MMVQ>(vl, vh, u, bq5_0->d, bq8_1->ds);
++    }
+     return vec_dot_q5_0_q8_1_impl<VDR_Q5_0_Q8_1_MMVQ>(vl, vh, u, bq5_0->d, bq8_1->ds);
+ }
+ 
+@@ -950,6 +1054,18 @@
+         u[2*i+1] = q8[4];
+     }
+ 
++#if defined(TURING_MMA_AVAILABLE)
++    if (ggml_probe_mmvq_flags & 32) { // I7
++        float s8[2];
++        for (int i = 0; i < 2; ++i) { s8[i] = __high2float((bq8_1 + bq8_offset + i)->ds); }
++        return probe_q4_K_m6(v, u, sc, m, bq4_K->dm, d8, s8);
++    }
++#endif
++    if (ggml_probe_mmvq_flags & 4) { // I4
++        float s8[2];
++        for (int i = 0; i < 2; ++i) { s8[i] = __high2float((bq8_1 + bq8_offset + i)->ds); }
++        return vec_dot_q4_K_q8_1_impl_vmmq(v, u, sc, m, bq4_K->dm, d8, s8);
++    }
+     return vec_dot_q4_K_q8_1_impl_vmmq(v, u, sc, m, bq4_K->dm, d8);
+ }
+ 
+@@ -996,6 +1112,18 @@
+         u[2*i+1] = q8[4];
+     }
+ 
++#if defined(TURING_MMA_AVAILABLE)
++    if (ggml_probe_mmvq_flags & 32) { // I7
++        float s8[2];
++        for (int i = 0; i < 2; ++i) { s8[i] = __high2float((bq8_1 + bq8_offset + i)->ds); }
++        return probe_q5_K_m6(vl, vh, u, sc, m, bq5_K->dm, d8, s8);
++    }
++#endif
++    if (ggml_probe_mmvq_flags & 4) { // I4
++        float s8[2];
++        for (int i = 0; i < 2; ++i) { s8[i] = __high2float((bq8_1 + bq8_offset + i)->ds); }
++        return vec_dot_q5_K_q8_1_impl_vmmq(vl, vh, u, sc, m, bq5_K->dm, d8, s8);
++    }
+     return vec_dot_q5_K_q8_1_impl_vmmq(vl, vh, u, sc, m, bq5_K->dm, d8);
+ }
+ 
+--- a/ggml/src/ggml-cuda/mmvq.cu
++++ b/ggml/src/ggml-cuda/mmvq.cu
+@@ -279,7 +279,19 @@
+     return MMVQ_MAX_BATCH_SIZE;
+ }
+ 
++#include <cstdlib>
++static int ggml_probe_host_flags = 0; // [cs6886 probe] host copy, for dispatch interventions
++void ggml_cuda_probe_init_mmvq(void) {
++    const char * e = getenv("GGML_PROBE_FLAGS");
++    const int f = e ? atoi(e) : 0;
++    ggml_probe_host_flags = f;
++    CUDA_CHECK(cudaMemcpyToSymbol(ggml_probe_mmvq_flags, &f, sizeof(int)));
++}
++
+ bool ggml_cuda_should_use_mmvq(enum ggml_type type, int cc, int64_t ne11) {
++    if (ggml_probe_host_flags & 16) { // I6: never MMVQ, so decode and prompt share MMQ
++        return false;
++    }
+     if (!ggml_is_quantized(type)) {
+         return false;
+     }
+--- a/ggml/src/ggml-cuda/mmvq.cuh
++++ b/ggml/src/ggml-cuda/mmvq.cuh
+@@ -1,5 +1,7 @@
+ #include "common.cuh"
+ 
++void ggml_cuda_probe_init_mmvq(void); // [cs6886 probe]
++
+ #define MMVQ_MAX_BATCH_SIZE 8 // Max. batch size for which to use MMVQ kernels.
+ 
+ bool ggml_cuda_should_use_mmvq(enum ggml_type type, int cc, int64_t ne11);
+--- a/ggml/src/ggml-cuda/ggml-cuda.cu
++++ b/ggml/src/ggml-cuda/ggml-cuda.cu
+@@ -5555,6 +5555,13 @@
+         GGML_LOG_ERROR("%s: failed to allocate context\n", __func__);
+         return nullptr;
+     }
++    { // [cs6886 probe] set intervention flags before any graph capture
++        ggml_cuda_set_device(device);
++        ggml_cuda_probe_init_quant();
++        ggml_cuda_probe_init_mmvq();
++        const char * e = getenv("GGML_PROBE_FLAGS");
++        GGML_LOG_INFO("[cs6886 probe] GGML_PROBE_FLAGS=%s on device %d\n", e ? e : "0", device);
++    }
+ 
+     ggml_backend_t cuda_backend = new ggml_backend {
+         /* .guid    = */ ggml_backend_cuda_guid(),

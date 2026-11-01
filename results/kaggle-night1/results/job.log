@@ -1,0 +1,148 @@
+[23:34:36] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[23:34:36] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 48, 11.43 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 49, 10.84 W, 70.00 W, 0x0000000000000001']
+[23:34:39] matmul_paths K=1536 N=1536 flags=0 rc=0 
+[23:34:42] matmul_paths K=1536 N=1536 flags=1 rc=0 
+[23:34:44] matmul_paths K=1536 N=1536 flags=2 rc=0 
+[23:34:47] matmul_paths K=1536 N=1536 flags=4 rc=0 
+[23:34:50] matmul_paths K=1536 N=1536 flags=8 rc=0 
+[23:34:52] matmul_paths K=1536 N=1536 flags=7 rc=0 
+[23:34:55] matmul_paths K=1536 N=1536 flags=15 rc=0 
+[23:34:58] matmul_paths K=1536 N=1536 flags=16 rc=0 
+[23:35:10] matmul_paths K=8960 N=1536 flags=0 rc=0 
+[23:35:22] matmul_paths K=8960 N=1536 flags=1 rc=0 
+[23:35:34] matmul_paths K=8960 N=1536 flags=2 rc=0 
+[23:35:46] matmul_paths K=8960 N=1536 flags=4 rc=0 
+[23:35:58] matmul_paths K=8960 N=1536 flags=8 rc=0 
+[23:36:09] matmul_paths K=8960 N=1536 flags=7 rc=0 
+[23:36:21] matmul_paths K=8960 N=1536 flags=15 rc=0 
+[23:36:33] matmul_paths K=8960 N=1536 flags=16 rc=0 
+[23:36:35] gate_probe K=1536 N=1536 rc=0 
+[23:37:02] downloaded qwen2.5-1.5b-instruct-fp16.gguf 3.56 GB in 27s
+[23:37:14] kv_paths F16 flags=0 rc=0 11s 
+[23:37:56] ppl_paths F16 flags=0 rc=0 42s 
+[23:38:13] kv_paths F16_cublas_f32 flags=0 rc=0 17s 
+[23:38:31] quantized Q8_0 in 18s (1.89 GB)
+[23:38:39] kv_paths Q8_0 flags=0 rc=0 8s 
+[23:38:47] kv_paths Q8_0 flags=4 rc=0 8s 
+[23:38:56] kv_paths Q8_0 flags=15 rc=0 8s 
+[23:39:04] kv_paths Q8_0 flags=16 rc=0 8s 
+[23:39:12] kv_paths Q8_0 flags=31 rc=0 8s 
+[23:39:42] ppl_paths Q8_0 flags=0 rc=0 30s 
+[23:40:12] ppl_paths Q8_0 flags=4 rc=0 30s 
+[23:40:42] ppl_paths Q8_0 flags=16 rc=0 30s 
+[23:40:57] quantized Q4_0 in 15s (1.01 GB)
+[23:41:03] kv_paths Q4_0 flags=0 rc=0 7s 
+[23:41:10] kv_paths Q4_0 flags=4 rc=0 6s 
+[23:41:16] kv_paths Q4_0 flags=15 rc=0 7s 
+[23:41:23] kv_paths Q4_0 flags=16 rc=0 7s 
+[23:41:30] kv_paths Q4_0 flags=31 rc=0 7s 
+[23:41:52] ppl_paths Q4_0 flags=0 rc=0 22s 
+[23:42:14] ppl_paths Q4_0 flags=4 rc=0 23s 
+[23:42:37] ppl_paths Q4_0 flags=16 rc=0 22s 
+[23:42:52] quantized Q4_1 in 15s (1.12 GB)
+[23:42:58] kv_paths Q4_1 flags=0 rc=0 7s 
+[23:43:05] kv_paths Q4_1 flags=4 rc=0 6s 
+[23:43:11] kv_paths Q4_1 flags=15 rc=0 6s 
+[23:43:18] kv_paths Q4_1 flags=16 rc=0 7s 
+[23:43:24] kv_paths Q4_1 flags=31 rc=0 7s 
+[23:43:46] ppl_paths Q4_1 flags=0 rc=0 22s 
+[23:44:08] ppl_paths Q4_1 flags=4 rc=0 22s 
+[23:44:30] ppl_paths Q4_1 flags=16 rc=0 22s 
+[23:44:46] quantized Q5_0 in 16s (1.23 GB)
+[23:44:54] kv_paths Q5_0 flags=0 rc=0 7s 
+[23:45:01] kv_paths Q5_0 flags=4 rc=0 7s 
+[23:45:08] kv_paths Q5_0 flags=15 rc=0 7s 
+[23:45:15] kv_paths Q5_0 flags=16 rc=0 7s 
+[23:45:22] kv_paths Q5_0 flags=31 rc=0 7s 
+[23:45:47] ppl_paths Q5_0 flags=0 rc=0 24s 
+[23:46:12] ppl_paths Q5_0 flags=4 rc=0 25s 
+[23:46:37] ppl_paths Q5_0 flags=16 rc=0 25s 
+[23:46:53] quantized Q5_1 in 16s (1.34 GB)
+[23:47:00] kv_paths Q5_1 flags=0 rc=0 7s 
+[23:47:07] kv_paths Q5_1 flags=4 rc=0 7s 
+[23:47:14] kv_paths Q5_1 flags=15 rc=0 7s 
+[23:47:21] kv_paths Q5_1 flags=16 rc=0 7s 
+[23:47:28] kv_paths Q5_1 flags=31 rc=0 7s 
+[23:47:52] ppl_paths Q5_1 flags=0 rc=0 24s 
+[23:48:16] ppl_paths Q5_1 flags=4 rc=0 24s 
+[23:48:40] ppl_paths Q5_1 flags=16 rc=0 24s 
+[23:50:23] quantized Q4_K in 103s (1.01 GB)
+[23:50:30] kv_paths Q4_K flags=0 rc=0 7s 
+[23:50:36] kv_paths Q4_K flags=4 rc=0 6s 
+[23:50:43] kv_paths Q4_K flags=15 rc=0 6s 
+[23:50:49] kv_paths Q4_K flags=16 rc=0 7s 
+[23:50:56] kv_paths Q4_K flags=31 rc=0 7s 
+[23:51:19] ppl_paths Q4_K flags=0 rc=0 23s 
+[23:51:42] ppl_paths Q4_K flags=4 rc=0 23s 
+[23:52:06] ppl_paths Q4_K flags=16 rc=0 24s 
+[23:53:31] quantized Q5_K in 85s (1.23 GB)
+[23:53:38] kv_paths Q5_K flags=0 rc=0 7s 
+[23:53:45] kv_paths Q5_K flags=4 rc=0 7s 
+[23:53:52] kv_paths Q5_K flags=15 rc=0 7s 
+[23:53:59] kv_paths Q5_K flags=16 rc=0 7s 
+[23:54:06] kv_paths Q5_K flags=31 rc=0 7s 
+[23:54:31] ppl_paths Q5_K flags=0 rc=0 25s 
+[23:54:56] ppl_paths Q5_K flags=4 rc=0 25s 
+[23:55:21] ppl_paths Q5_K flags=16 rc=0 25s 
+[23:56:06] quantized Q6_K in 45s (1.46 GB)
+[23:56:14] kv_paths Q6_K flags=0 rc=0 8s 
+[23:56:22] kv_paths Q6_K flags=4 rc=0 8s 
+[23:56:29] kv_paths Q6_K flags=15 rc=0 8s 
+[23:56:37] kv_paths Q6_K flags=16 rc=0 8s 
+[23:56:45] kv_paths Q6_K flags=31 rc=0 8s 
+[23:57:15] ppl_paths Q6_K flags=0 rc=0 29s 
+[23:57:43] ppl_paths Q6_K flags=4 rc=0 29s 
+[23:58:12] ppl_paths Q6_K flags=16 rc=0 29s 
+[23:58:38] quantized Q3_K in 26s (0.77 GB)
+[23:58:47] kv_paths Q3_K flags=0 rc=0 8s 
+[23:58:54] kv_paths Q3_K flags=4 rc=0 8s 
+[23:59:02] kv_paths Q3_K flags=15 rc=0 8s 
+[23:59:10] kv_paths Q3_K flags=16 rc=0 8s 
+[23:59:18] kv_paths Q3_K flags=31 rc=0 8s 
+[23:59:48] ppl_paths Q3_K flags=0 rc=0 29s 
+[00:00:16] ppl_paths Q3_K flags=4 rc=0 29s 
+[00:00:45] ppl_paths Q3_K flags=16 rc=0 29s 
+[00:02:10] quantized Q2_K in 85s (0.59 GB)
+[00:02:17] kv_paths Q2_K flags=0 rc=0 7s 
+[00:02:24] kv_paths Q2_K flags=4 rc=0 7s 
+[00:02:30] kv_paths Q2_K flags=15 rc=0 7s 
+[00:02:37] kv_paths Q2_K flags=16 rc=0 7s 
+[00:02:44] kv_paths Q2_K flags=31 rc=0 7s 
+[00:03:07] ppl_paths Q2_K flags=0 rc=0 23s 
+[00:03:30] ppl_paths Q2_K flags=4 rc=0 24s 
+[00:03:54] ppl_paths Q2_K flags=16 rc=0 24s 
+[00:05:22] quantized Q4_K_M in 88s (1.12 GB)
+[00:05:29] kv_paths Q4_K_M flags=0 rc=0 7s 
+[00:05:36] kv_paths Q4_K_M flags=4 rc=0 7s 
+[00:05:43] kv_paths Q4_K_M flags=15 rc=0 7s 
+[00:05:49] kv_paths Q4_K_M flags=16 rc=0 7s 
+[00:05:56] kv_paths Q4_K_M flags=31 rc=0 7s 
+[00:06:21] ppl_paths Q4_K_M flags=0 rc=0 24s 
+[00:06:46] ppl_paths Q4_K_M flags=4 rc=0 25s 
+[00:07:11] ppl_paths Q4_K_M flags=16 rc=0 25s 
+[00:07:59] quantized Q3_K_M in 48s (0.92 GB)
+[00:08:06] kv_paths Q3_K_M flags=0 rc=0 7s 
+[00:08:13] kv_paths Q3_K_M flags=4 rc=0 7s 
+[00:08:20] kv_paths Q3_K_M flags=15 rc=0 7s 
+[00:08:27] kv_paths Q3_K_M flags=16 rc=0 7s 
+[00:08:34] kv_paths Q3_K_M flags=31 rc=0 7s 
+[00:09:02] ppl_paths Q3_K_M flags=0 rc=0 27s 
+[00:09:29] ppl_paths Q3_K_M flags=4 rc=0 28s 
+[00:09:57] ppl_paths Q3_K_M flags=16 rc=0 27s 
+[00:10:37] downloaded 7B_Q4_K_M in 40s
+[00:10:59] kv_paths 7B_Q4_K_M flags=0 rc=0 22s 
+[00:11:21] kv_paths 7B_Q4_K_M flags=4 rc=0 23s 
+[00:11:45] kv_paths 7B_Q4_K_M flags=15 rc=0 24s 
+[00:12:08] kv_paths 7B_Q4_K_M flags=16 rc=0 23s 
+[00:13:40] ppl_paths 7B_Q4_K_M flags=0 rc=0 92s 
+[00:15:12] ppl_paths 7B_Q4_K_M flags=4 rc=0 92s 
+[00:16:43] ppl_paths 7B_Q4_K_M flags=16 rc=0 91s 
+[00:18:31] downloaded 7B_Q8_0 in 106s
+[00:18:54] kv_paths 7B_Q8_0 flags=0 rc=0 23s 
+[00:19:19] kv_paths 7B_Q8_0 flags=4 rc=0 25s 
+[00:19:45] kv_paths 7B_Q8_0 flags=15 rc=0 26s 
+[00:20:13] kv_paths 7B_Q8_0 flags=16 rc=0 28s 
+[00:21:55] ppl_paths 7B_Q8_0 flags=0 rc=0 102s 
+[00:23:38] ppl_paths 7B_Q8_0 flags=4 rc=0 103s 
+[00:25:23] ppl_paths 7B_Q8_0 flags=16 rc=0 104s 
+[00:25:24] done

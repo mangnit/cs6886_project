@@ -1,0 +1,19 @@
+[17:36:31] plan=episodes matmul_flags=[] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=F16,Q8_0,Q4_K_M,Q4_0 mixes=Q4_K,Q3_K src=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00001-of-00002.gguf,https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00002-of-00002.gguf
+[17:37:04] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[17:37:05] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 52, 10.16 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 47, 9.76 W, 70.00 W, 0x0000000000000001']
+[17:38:10] downloaded 2 part(s) of qwen2.5-3b-instruct-fp16-00001-of-00002.gguf in 65s
+[17:38:21] episodes: 80 x 4 requests, n_predict=384, follow-ups=('Thank you. Now summarize everything you have said so far in three sentences.', 'Finally, list three questions a curious reader might ask next, each with a one-line answer.')
+[18:13:53] episodes Q3B_F16 flags=0 arm=cache ok 2132s clocks[300 MHz, 49, 9.96 W, 0x0000000000000001] -> [1590 MHz, 77, 50.36 W, 0x0000000000000000]
+[18:51:00] episodes Q3B_F16 flags=0 arm=recompute ok 2227s clocks[1590 MHz, 77, 49.80 W, 0x0000000000000000] -> [1590 MHz, 77, 50.56 W, 0x0000000000000000]
+[19:12:46] episodes Q3B_Q8_0 flags=0 arm=cache ok 1266s clocks[300 MHz, 66, 14.83 W, 0x0000000000000001] -> [1590 MHz, 76, 47.27 W, 0x0000000000000000]
+[19:34:42] episodes Q3B_Q8_0 flags=0 arm=recompute ok 1315s clocks[1590 MHz, 76, 47.27 W, 0x0000000000000000] -> [1590 MHz, 76, 47.96 W, 0x0000000000000000]
+[19:56:40] episodes Q3B_Q4_K_M flags=0 arm=cache ok 1125s clocks[300 MHz, 55, 13.44 W, 0x0000000000000001] -> [1590 MHz, 77, 46.48 W, 0x0000000000000000]
+[20:16:50] episodes Q3B_Q4_K_M flags=0 arm=recompute ok 1210s clocks[1590 MHz, 77, 46.48 W, 0x0000000000000000] -> [1590 MHz, 77, 50.10 W, 0x0000000000000000]
+[20:35:29] episodes Q3B_Q4_K_M flags=384 arm=cache ok 1119s clocks[1590 MHz, 77, 47.47 W, 0x0000000000000000] -> [1485 MHz, 76, 46.08 W, 0x0000000000000000]
+[20:55:33] episodes Q3B_Q4_K_M flags=384 arm=recompute ok 1205s clocks[1485 MHz, 76, 45.00 W, 0x0000000000000000] -> [1590 MHz, 76, 43.45 W, 0x0000000000000000]
+[21:14:25] episodes Q3B_Q4_K_M_rep flags=0 arm=cache ok 1131s
+[21:28:55] episodes Q3B_Q4_0 flags=0 arm=cache ok 838s clocks[300 MHz, 68, 14.93 W, 0x0000000000000001] -> [1590 MHz, 77, 49.90 W, 0x0000000000000000]
+[21:43:44] episodes Q3B_Q4_0 flags=0 arm=recompute ok 889s clocks[1590 MHz, 77, 46.87 W, 0x0000000000000000] -> [1590 MHz, 76, 45.69 W, 0x0000000000000000]
+[21:57:28] episodes Q3B_Q4_0 flags=384 arm=cache ok 823s clocks[1590 MHz, 76, 45.69 W, 0x0000000000000000] -> [1590 MHz, 76, 49.60 W, 0x0000000000000000]
+[22:12:19] episodes Q3B_Q4_0 flags=384 arm=recompute ok 891s clocks[1590 MHz, 76, 47.07 W, 0x0000000000000000] -> [1590 MHz, 76, 45.79 W, 0x0000000000000000]
+[22:12:19] done

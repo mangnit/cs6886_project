@@ -1,0 +1,24 @@
+[{"stream_name":"stdout","time":0.960232937,"data":"[06:53:15] plan=explain matmul_flags=[] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=Q8_0,Q4_0,Q4_1,Q5_0,Q5_1,Q4_K,Q5_K,Q6_K,Q3_K,Q2_K mixes=Q4_K,Q3_K src=https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-f16.gguf\n"}
+,{"stream_name":"stdout","time":35.12876213,"data":"[06:53:49] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -\u003e rc=0 \n"}
+,{"stream_name":"stdout","time":36.212096625,"data":"[06:53:50] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 42, 13.33 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 42, 9.85 W, 70.00 W, 0x0000000000000001']\n"}
+,{"stream_name":"stdout","time":86.838717693,"data":"[06:54:40] downloaded 1 part(s) of Llama-3.2-3B-Instruct-f16.gguf in 51s\n"}
+,{"stream_name":"stdout","time":127.62786086,"data":"[06:55:21] real_replay Q4_0 flags=0 rc=0 12s \n"}
+,{"stream_name":"stdout","time":129.360660506,"data":"[06:55:23] kv_bisect Q4_0 flags=0 prompt=0 rc=0 \n"}
+,{"stream_name":"stdout","time":130.920656485,"data":"[06:55:24] kv_bisect Q4_0 flags=0 prompt=1 rc=0 \n"}
+,{"stream_name":"stdout","time":132.464856297,"data":"[06:55:26] kv_bisect Q4_0 flags=0 prompt=2 rc=0 \n"}
+,{"stream_name":"stdout","time":143.978387402,"data":"[06:55:38] real_replay Q4_0 flags=4 rc=0 12s \n"}
+,{"stream_name":"stdout","time":145.710174664,"data":"[06:55:39] kv_bisect Q4_0 flags=4 prompt=0 rc=0 \n"}
+,{"stream_name":"stdout","time":147.310548439,"data":"[06:55:41] kv_bisect Q4_0 flags=4 prompt=1 rc=0 \n"}
+,{"stream_name":"stdout","time":148.831917049,"data":"[06:55:42] kv_bisect Q4_0 flags=4 prompt=2 rc=0 \n"}
+,{"stream_name":"stdout","time":190.366884598,"data":"[06:56:24] real_replay Q5_0 flags=0 rc=0 13s \n"}
+,{"stream_name":"stdout","time":202.71244715,"data":"[06:56:36] real_replay Q5_0 flags=4 rc=0 12s \n"}
+,{"stream_name":"stdout","time":248.129234206,"data":"[06:57:22] real_replay Q8_0 flags=0 rc=0 14s \n"}
+,{"stream_name":"stdout","time":261.735153947,"data":"[06:57:35] real_replay Q8_0 flags=4 rc=0 14s \n"}
+,{"stream_name":"stdout","time":261.987564325,"data":"[06:57:36] done\n"}
+,{"stream_name":"stderr","time":264.130970639,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":264.131002619,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":264.459111331,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":264.459141147,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":265.42763157,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":266.750307269,"data":"[NbConvertApp] Writing 372805 bytes to __results__.html\n"}
+]

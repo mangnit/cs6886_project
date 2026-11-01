@@ -1,0 +1,36 @@
+device NVIDIA GeForce MX330 cc 61
+P1 operator, upstream delta
+  q4_0  consistent delta 1.98e-07  pass
+  q4_1  consistent delta 2.04e-07  pass
+  q5_1  consistent delta 2.02e-07  pass
+  q5_0  M4         delta 2.02e-02  pass
+  q4_K  M4         delta 1.14e-02  pass
+  q5_K  M4         delta 1.15e-02  pass
+  q8_0  M1         delta 2.11e-04  pass
+  q6_K  M1         delta 2.11e-04  pass
+  q3_K  M1         delta 2.12e-04  pass
+  P1: pass
+P2 operator under G: error vs FP64 <= 1.05 x Q6_K (1.086e-02) (falsified if > 1.15 x)
+  q4_0  decode/prompt 1.087e-02/1.087e-02  x1.000
+  q5_0  decode/prompt 1.085e-02/1.086e-02  x0.999
+  q4_1  decode/prompt 1.077e-02/1.077e-02  x0.992
+  q5_1  decode/prompt 1.083e-02/1.083e-02  x0.998
+  q4_K  decode/prompt 1.087e-02/1.085e-02  x1.001
+  q5_K  decode/prompt 1.086e-02/1.085e-02  x1.000
+  P2: pass
+end to end: floor Q6_K 0.324 (8 flips); Q8_0 not run (2 GB)
+  Q4_0: upstream 1.019 (3.14x) -> G 0.330 (1.02x)  pass
+  Q4_1: upstream 0.765 (2.36x) -> G 0.323 (1.00x) | I9 2.36x  pass
+  Q5_1: upstream 0.772 (2.38x) -> G 0.318 (0.98x) | I9 2.38x  pass
+  P3 (consistent, FP32 sum): pass
+  Q5_0: upstream 0.825 (2.54x) -> G 0.324 (1.00x)  pass
+  Q4_K: upstream 0.631 (1.95x) -> G 0.311 (0.96x)  pass
+  Q5_K: upstream 0.647 (1.99x) -> G 0.324 (1.00x)  pass
+  P4 (inconsistent, M4): pass
+  recorded Q4_K_M: 1.49x -> 0.99x
+P5 PPL decode - batch (z = dnll/se_chunk): Q4_0 |z| < 2, Q5_0 z >= 2 (falsified if Q4_0 z >= 2.5 or Q5_0 z < 1)
+  Q4_0: +0.28% z +0.63
+  Q5_0: +0.56% z +1.50
+  P5: partial
+  recorded Q4_0: z +0.63 -> G z +1.58
+  recorded Q5_0: z +1.50

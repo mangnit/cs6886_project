@@ -1,0 +1,57 @@
+[04:40:23] plan=i8 matmul_flags=['0', '4', '64', '47'] kv_flags=['0', '64'] ppl_flags=['0', '64'] ppl_chunks=8 formats=Q4_K,Q5_K,Q8_0 mixes=Q4_K src=qwen2.5-1.5b
+[04:40:51] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[04:40:52] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 45, 10.23 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 40, 9.64 W, 70.00 W, 0x0000000000000001']
+[04:40:55] matmul_paths K=1536 N=1536 flags=0 rc=0 
+[04:40:58] matmul_paths K=1536 N=1536 flags=4 rc=0 
+[04:41:00] matmul_paths K=1536 N=1536 flags=64 rc=0 
+[04:41:03] matmul_paths K=1536 N=1536 flags=47 rc=0 
+[04:41:15] matmul_paths K=8960 N=1536 flags=0 rc=0 
+[04:41:26] matmul_paths K=8960 N=1536 flags=4 rc=0 
+[04:41:38] matmul_paths K=8960 N=1536 flags=64 rc=0 
+[04:41:49] matmul_paths K=8960 N=1536 flags=47 rc=0 
+[04:41:51] gate_probe K=1536 N=1536 flags=0 rc=0 
+[04:41:54] gate_probe K=1536 N=1536 flags=64 rc=0 
+[04:42:14] downloaded qwen2.5-1.5b-instruct-fp16.gguf 3.56 GB in 20s
+[04:44:02] kv_bisect Q4_K flags=0 prompt=0 rc=0 
+[04:44:04] kv_bisect Q4_K flags=0 prompt=1 rc=0 
+[04:44:06] kv_bisect Q4_K flags=0 prompt=2 rc=0 
+[04:44:08] kv_bisect Q4_K flags=64 prompt=0 rc=0 
+[04:44:09] kv_bisect Q4_K flags=64 prompt=1 rc=0 
+[04:44:11] kv_bisect Q4_K flags=64 prompt=2 rc=0 
+[04:45:38] kv_bisect Q5_K flags=0 prompt=0 rc=0 
+[04:45:40] kv_bisect Q5_K flags=0 prompt=1 rc=0 
+[04:45:41] kv_bisect Q5_K flags=0 prompt=2 rc=0 
+[04:45:43] kv_bisect Q5_K flags=64 prompt=0 rc=0 
+[04:45:45] kv_bisect Q5_K flags=64 prompt=1 rc=0 
+[04:45:46] kv_bisect Q5_K flags=64 prompt=2 rc=0 
+[04:46:03] kv_bisect Q4_0 flags=0 prompt=0 rc=0 
+[04:46:05] kv_bisect Q4_0 flags=0 prompt=1 rc=0 
+[04:46:07] kv_bisect Q4_0 flags=0 prompt=2 rc=0 
+[04:46:08] kv_bisect Q4_0 flags=64 prompt=0 rc=0 
+[04:46:10] kv_bisect Q4_0 flags=64 prompt=1 rc=0 
+[04:46:11] kv_bisect Q4_0 flags=64 prompt=2 rc=0 
+[04:46:22] kv_paths F16 flags=0 rc=0 10s clocks[1590 MHz, 56, 37.62 W, 0x0000000000000000] 
+[04:47:04] ppl_paths F16 flags=0 rc=0 42s clocks[1590 MHz, 68, 41.33 W, 0x0000000000000000] 
+[04:47:54] ppl_paths F16_cublas_f32 flags=0 rc=0 50s clocks[1590 MHz, 79, 46.97 W, 0x0000000000000000] 
+[04:48:13] kv_paths F16_cublas_f32 flags=0 rc=0 19s clocks[1590 MHz, 78, 50.54 W, 0x0000000000000000] 
+[04:49:54] quantized Q4_K in 101s (1.01 GB)
+[04:50:01] kv_paths Q4_K flags=0 rc=0 7s clocks[1590 MHz, 64, 41.72 W, 0x0000000000000000] 
+[04:50:07] kv_paths Q4_K flags=64 rc=0 6s clocks[1590 MHz, 67, 42.31 W, 0x0000000000000000] 
+[04:50:30] ppl_paths Q4_K flags=64 rc=0 23s clocks[1590 MHz, 74, 47.66 W, 0x0000000000000000] 
+[04:50:53] ppl_paths Q4_K flags=0 rc=0 23s clocks[1590 MHz, 79, 49.59 W, 0x0000000000000000] 
+[04:52:18] quantized Q5_K in 84s (1.23 GB)
+[04:52:25] kv_paths Q5_K flags=64 rc=0 7s clocks[1590 MHz, 68, 42.19 W, 0x0000000000000000] 
+[04:52:32] kv_paths Q5_K flags=0 rc=0 7s clocks[1590 MHz, 70, 43.37 W, 0x0000000000000000] 
+[04:52:57] ppl_paths Q5_K flags=0 rc=0 25s clocks[1590 MHz, 77, 46.88 W, 0x0000000000000000] 
+[04:53:23] ppl_paths Q5_K flags=64 rc=0 26s clocks[1590 MHz, 79, 46.78 W, 0x0000000000000000] 
+[04:53:41] quantized Q8_0 in 18s (1.89 GB)
+[04:53:49] kv_paths Q8_0 flags=64 rc=0 8s clocks[1440 MHz, 73, 39.78 W, 0x0000000000000000] 
+[04:53:57] kv_paths Q8_0 flags=0 rc=0 8s clocks[1590 MHz, 76, 48.35 W, 0x0000000000000000] 
+[04:54:28] ppl_paths Q8_0 flags=0 rc=0 30s clocks[1590 MHz, 80, 49.30 W, 0x0000000000000000] 
+[04:54:58] ppl_paths Q8_0 flags=64 rc=0 30s clocks[1590 MHz, 75, 46.61 W, 0x0000000000000000] 
+[04:56:25] quantized Q4_K_M in 87s (1.12 GB)
+[04:56:32] kv_paths Q4_K_M flags=64 rc=0 7s clocks[1590 MHz, 65, 41.63 W, 0x0000000000000000] 
+[04:56:39] kv_paths Q4_K_M flags=0 rc=0 7s clocks[1380 MHz, 68, 37.64 W, 0x0000000000000000] 
+[04:57:03] ppl_paths Q4_K_M flags=64 rc=0 24s clocks[1590 MHz, 75, 47.17 W, 0x0000000000000000] 
+[04:57:28] ppl_paths Q4_K_M flags=0 rc=0 25s clocks[1500 MHz, 80, 46.97 W, 0x0000000000000000] 
+[04:57:28] done

@@ -1,0 +1,63 @@
+[{"stream_name":"stdout","time":1.211417708,"data":"[08:10:21] plan=final matmul_flags=['0', '4', '128', '256', '384'] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=Q8_0,Q4_0,Q4_1,Q5_0,Q5_1,Q4_K,Q5_K,Q6_K,Q3_K,Q2_K mixes=Q4_K,Q3_K src=qwen2.5-1.5b\n"}
+,{"stream_name":"stdout","time":33.41718548,"data":"[08:10:53] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -\u003e rc=0 \n"}
+,{"stream_name":"stdout","time":34.578255528,"data":"[08:10:54] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 33, 10.36 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 32, 9.46 W, 70.00 W, 0x0000000000000001']\n"}
+,{"stream_name":"stdout","time":38.037779955,"data":"[08:10:58] matmul_paths K=1536 N=1536 flags=0 rc=0 \n"}
+,{"stream_name":"stdout","time":40.749476012,"data":"[08:11:01] matmul_paths K=1536 N=1536 flags=4 rc=0 \n"}
+,{"stream_name":"stdout","time":43.518256036,"data":"[08:11:03] matmul_paths K=1536 N=1536 flags=128 rc=0 \n"}
+,{"stream_name":"stdout","time":46.244424308,"data":"[08:11:06] matmul_paths K=1536 N=1536 flags=256 rc=0 \n"}
+,{"stream_name":"stdout","time":48.947579741,"data":"[08:11:09] matmul_paths K=1536 N=1536 flags=384 rc=0 \n"}
+,{"stream_name":"stdout","time":70.286420931,"data":"[08:11:30] downloaded qwen2.5-1.5b-instruct-fp16.gguf 3.56 GB in 21s\n"}
+,{"stream_name":"stdout","time":95.915399793,"data":"[08:11:56] kv_paths Q4_1 flags=0 rc=0 clocks[1590 MHz, 41, 35.09 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":102.539630183,"data":"[08:12:02] kv_paths Q4_1 flags=128 rc=0 clocks[1590 MHz, 44, 37.65 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":109.173478298,"data":"[08:12:09] kv_paths Q4_1 flags=384 rc=0 clocks[1590 MHz, 46, 35.19 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":134.437772001,"data":"[08:12:34] kv_paths Q5_1 flags=0 rc=0 clocks[1590 MHz, 47, 36.76 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":141.541877669,"data":"[08:12:41] kv_paths Q5_1 flags=128 rc=0 clocks[1590 MHz, 49, 35.48 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":148.658576854,"data":"[08:12:48] kv_paths Q5_1 flags=384 rc=0 clocks[1590 MHz, 51, 36.47 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":266.513132107,"data":"[08:14:46] latency Q4_K rep=0 flags=0 rc=0 clocks[1590 MHz, 44, 35.38 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":273.168625734,"data":"[08:14:53] latency Q4_K rep=1 flags=64 rc=0 clocks[1575 MHz, 46, 36.86 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":279.843561896,"data":"[08:15:00] latency Q4_K rep=2 flags=64 rc=0 clocks[1590 MHz, 48, 36.07 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":286.554284855,"data":"[08:15:06] latency Q4_K rep=3 flags=0 rc=0 clocks[1590 MHz, 50, 35.68 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":293.320587649,"data":"[08:15:13] latency Q4_K rep=4 flags=0 rc=0 clocks[1590 MHz, 52, 36.17 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":300.019615755,"data":"[08:15:20] latency Q4_K rep=5 flags=64 rc=0 clocks[1590 MHz, 53, 39.01 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":306.691120837,"data":"[08:15:27] latency Q4_K rep=6 flags=64 rc=0 clocks[1560 MHz, 55, 36.86 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":313.351014431,"data":"[08:15:33] latency Q4_K rep=7 flags=0 rc=0 clocks[1590 MHz, 56, 38.81 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":320.147072101,"data":"[08:15:40] latency Q4_K rep=8 flags=0 rc=0 clocks[1590 MHz, 57, 36.84 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":326.823308318,"data":"[08:15:47] latency Q4_K rep=9 flags=64 rc=0 clocks[1590 MHz, 58, 36.84 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":333.400589162,"data":"[08:15:53] latency Q4_1 rep=0 flags=0 rc=0 clocks[1590 MHz, 59, 38.52 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":340.040886616,"data":"[08:16:00] latency Q4_1 rep=1 flags=256 rc=0 clocks[1590 MHz, 60, 38.32 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":346.753226465,"data":"[08:16:07] latency Q4_1 rep=2 flags=256 rc=0 clocks[1590 MHz, 61, 40.19 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":353.326759309,"data":"[08:16:13] latency Q4_1 rep=3 flags=0 rc=0 clocks[1590 MHz, 62, 41.65 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":359.938793129,"data":"[08:16:20] latency Q4_1 rep=4 flags=0 rc=0 clocks[1590 MHz, 62, 39.01 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":366.561887986,"data":"[08:16:26] latency Q4_1 rep=5 flags=256 rc=0 clocks[1590 MHz, 63, 41.85 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":373.182758244,"data":"[08:16:33] latency Q4_1 rep=6 flags=256 rc=0 clocks[1590 MHz, 64, 42.24 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":379.794836405,"data":"[08:16:40] latency Q4_1 rep=7 flags=0 rc=0 clocks[1590 MHz, 65, 42.04 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":386.41261547,"data":"[08:16:46] latency Q4_1 rep=8 flags=0 rc=0 clocks[1590 MHz, 65, 39.38 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":393.029899365,"data":"[08:16:53] latency Q4_1 rep=9 flags=256 rc=0 clocks[1590 MHz, 66, 42.34 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":416.268509884,"data":"[08:17:16] latency Q4_0 rep=0 flags=0 rc=0 clocks[1590 MHz, 62, 40.57 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":423.033503239,"data":"[08:17:23] latency Q4_0 rep=1 flags=4 rc=0 clocks[1590 MHz, 63, 40.49 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":429.851311214,"data":"[08:17:30] latency Q4_0 rep=2 flags=4 rc=0 clocks[1590 MHz, 64, 42.64 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":436.494083582,"data":"[08:17:36] latency Q4_0 rep=3 flags=0 rc=0 clocks[1590 MHz, 65, 39.48 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":443.083602749,"data":"[08:17:43] latency Q4_0 rep=4 flags=0 rc=0 clocks[1560 MHz, 66, 41.72 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":449.828552367,"data":"[08:17:50] latency Q4_0 rep=5 flags=4 rc=0 clocks[1590 MHz, 66, 40.17 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":456.54806658,"data":"[08:17:56] latency Q4_0 rep=6 flags=4 rc=0 clocks[1590 MHz, 67, 41.26 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":463.14708149,"data":"[08:18:03] latency Q4_0 rep=7 flags=0 rc=0 clocks[1590 MHz, 68, 40.49 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":469.913839986,"data":"[08:18:10] latency Q4_0 rep=8 flags=0 rc=0 clocks[1590 MHz, 68, 40.57 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":476.658440023,"data":"[08:18:16] latency Q4_0 rep=9 flags=4 rc=0 clocks[1590 MHz, 69, 41.23 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":501.735186153,"data":"[08:18:42] latency Q5_0 rep=0 flags=0 rc=0 clocks[1590 MHz, 64, 43.30 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":508.972992081,"data":"[08:18:49] latency Q5_0 rep=1 flags=4 rc=0 clocks[1590 MHz, 65, 41.65 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":516.272266288,"data":"[08:18:56] latency Q5_0 rep=2 flags=4 rc=0 clocks[1590 MHz, 66, 42.24 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":523.516263335,"data":"[08:19:03] latency Q5_0 rep=3 flags=0 rc=0 clocks[1590 MHz, 67, 40.19 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":530.584398698,"data":"[08:19:10] latency Q5_0 rep=4 flags=0 rc=0 clocks[1590 MHz, 68, 40.39 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":537.829726362,"data":"[08:19:18] latency Q5_0 rep=5 flags=4 rc=0 clocks[1590 MHz, 68, 43.10 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":545.099754536,"data":"[08:19:25] latency Q5_0 rep=6 flags=4 rc=0 clocks[1590 MHz, 69, 42.81 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":552.282523667,"data":"[08:19:32] latency Q5_0 rep=7 flags=0 rc=0 clocks[1590 MHz, 69, 42.61 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":559.397034553,"data":"[08:19:39] latency Q5_0 rep=8 flags=0 rc=0 clocks[1590 MHz, 70, 41.55 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":566.768604425,"data":"[08:19:47] latency Q5_0 rep=9 flags=4 rc=0 clocks[1560 MHz, 70, 40.76 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":567.135415994,"data":"[08:19:47] done\n"}
+,{"stream_name":"stderr","time":569.753755971,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":569.753800412,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":570.146414576,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":570.146444394,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":571.463924939,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":573.23195994,"data":"[NbConvertApp] Writing 383144 bytes to __results__.html\n"}
+]

@@ -1,0 +1,10 @@
+[05:33:06] plan=close matmul_flags=[] kv_flags=['0', '384'] ppl_flags=['0', '384'] ppl_chunks=24 formats=Q6_K,Q4_0,Q5_0,Q4_1,Q5_1,Q4_K,Q5_K,Q8_0 mixes=Q4_K src=qwen2.5-1.5b
+[05:33:15] GPU: ['NVIDIA GeForce MX330, 576.83, 6.1, 139 MHz, 1911 MHz, 3504 MHz, 72, [N/A], [N/A], 0x0000000000000020']
+[07:00:51] kv_paths P15_F16 flags=0 rc=0 5254s clocks[139 MHz, 71, [N/A], 0x0000000000000020] 
+[09:48:42] ppl_paths P15_F16 flags=0 rc=-6 10067s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 45ea8ca34b]
+build/probes-sm61/ppl_paths(+0xb89ea)[0x5d45ea8cf9ea]
+build/probes-sm61/ppl_paths(+0xb9a80)[0x5d45ea8d0a80]
+build/probes-sm61/ppl_paths(+0x46130)[0x5d45ea85d130]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x767d9c832083]
+build/probes-sm61/ppl_paths(+0x96e9e)[0x5d45ea8ade9e]
+

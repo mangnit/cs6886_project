@@ -1,0 +1,36 @@
+[11:22:03] plan=close matmul_flags=[] kv_flags=['0', '384'] ppl_flags=['0', '384'] ppl_chunks=24 formats=Q6_K,Q4_0,Q5_0,Q4_1,Q5_1,Q4_K,Q5_K mixes=Q4_K src=qwen2.5-1.5b
+[11:22:09] GPU: ['NVIDIA GeForce MX330, 576.83, 6.1, 139 MHz, 1911 MHz, 3504 MHz, 75, [N/A], [N/A], 0x0000000000000020']
+[11:24:26] quantized P15_Q6_K in 137s (1.46 GB)
+[11:32:54] kv_paths P15_Q6_K flags=0 rc=0 501s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[11:40:49] kv_paths P15_Q6_K flags=384 rc=0 474s clocks[139 MHz, 70, [N/A], 0x0000000000000020] 
+[12:42:46] plan=close matmul_flags=[] kv_flags=['0', '384'] ppl_flags=['0', '384'] ppl_chunks=24 formats=Q4_0,Q5_0,Q4_1,Q5_1,Q4_K,Q5_K mixes=Q4_K src=qwen2.5-1.5b
+[12:43:10] GPU: ['NVIDIA GeForce MX330, 576.83, 6.1, 139 MHz, 1911 MHz, 405 MHz, 77, [N/A], [N/A], 0x0000000000000020']
+[12:46:24] quantized P15_Q4_0 in 194s (1.01 GB)
+[12:52:33] kv_paths P15_Q4_0 flags=0 rc=0 364s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[12:58:46] kv_paths P15_Q4_0 flags=384 rc=0 372s clocks[139 MHz, 70, [N/A], 0x0000000000000020] 
+[14:02:49] ppl_paths P15_Q4_0 flags=384 rc=0 3843s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[15:06:59] ppl_paths P15_Q4_0 flags=0 rc=0 3848s clocks[139 MHz, 70, [N/A], 0x0000000000000020] 
+[15:17:48] quantized P15_Q5_0 in 649s (1.23 GB)
+[15:24:20] kv_paths P15_Q5_0 flags=384 rc=0 391s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[15:30:53] kv_paths P15_Q5_0 flags=0 rc=0 392s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[16:39:02] ppl_paths P15_Q5_0 flags=0 rc=0 4088s clocks[139 MHz, 70, [N/A], 0x0000000000000020] 
+[23:25:24] plan=close matmul_flags=[] kv_flags=['0', '384'] ppl_flags=['0', '384'] ppl_chunks=24 formats=Q4_1,Q5_1,Q4_K,Q5_K mixes=Q4_K src=qwen2.5-1.5b
+[23:25:31] GPU: ['NVIDIA GeForce MX330, 576.83, 6.1, 1531 MHz, 1911 MHz, 3504 MHz, 70, [N/A], [N/A], 0x0000000000000000']
+[23:27:15] quantized P15_Q4_1 in 104s (1.12 GB)
+[23:32:14] kv_paths P15_Q4_1 flags=0 rc=0 297s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[23:37:49] kv_paths P15_Q4_1 flags=384 rc=0 333s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[23:43:02] kv_paths P15_Q4_1 flags=128 rc=0 308s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[23:45:42] quantized P15_Q5_1 in 160s (1.34 GB)
+[23:51:29] kv_paths P15_Q5_1 flags=384 rc=0 343s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[23:58:07] kv_paths P15_Q5_1 flags=128 rc=0 396s clocks[139 MHz, 69, [N/A], 0x0000000000000020] 
+[00:03:56] kv_paths P15_Q5_1 flags=0 rc=0 348s clocks[139 MHz, 71, [N/A], 0x0000000000000020] 
+[00:10:00] quantized P15_Q4_K in 364s (1.01 GB)
+[00:17:03] kv_paths P15_Q4_K flags=0 rc=0 420s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[00:24:36] kv_paths P15_Q4_K flags=384 rc=0 452s clocks[139 MHz, 68, [N/A], 0x0000000000000020] 
+[00:32:35] quantized P15_Q5_K in 479s (1.23 GB)
+[00:39:55] kv_paths P15_Q5_K flags=384 rc=0 440s clocks[139 MHz, 71, [N/A], 0x0000000000000020] 
+[00:48:31] kv_paths P15_Q5_K flags=0 rc=0 513s clocks[139 MHz, 72, [N/A], 0x0000000000000020] 
+[01:08:04] quantized P15_Q4_K_M in 1173s (1.12 GB)
+[01:20:50] kv_paths P15_Q4_K_M flags=0 rc=0 766s clocks[139 MHz, 73, [N/A], 0x0000000000000020] 
+[01:28:02] kv_paths P15_Q4_K_M flags=384 rc=0 431s clocks[139 MHz, 70, [N/A], 0x0000000000000020] 
+[01:28:02] done

@@ -1,0 +1,22 @@
+Context: median per-matmul values, clip 0
+model  fmt   flags    n crest_med  frac>4   err_dec   err_bat     excess
+Qwen   Q4_0  0      249     2.563  0.0737 1.398e-02 5.301e-03 +8.576e-03
+Qwen   Q4_0  4      249     2.563  0.0737 5.301e-03 5.301e-03 +6.992e-11
+Qwen   Q5_0  0      249     2.562  0.0764 1.409e-02 5.233e-03 +8.712e-03
+Qwen   Q5_0  4      249     2.562  0.0764 5.245e-03 5.233e-03 +3.893e-06
+Qwen   Q8_0  0      249     2.562  0.0745 5.288e-03 5.291e-03 +1.901e-06
+Qwen   Q8_0  4      249     2.562  0.0745 5.288e-03 5.291e-03 +1.901e-06
+Llama  Q4_0  0      193     2.789  0.1354 1.448e-02 5.844e-03 +8.654e-03
+Llama  Q4_0  4      193     2.789  0.1354 5.844e-03 5.844e-03 -8.493e-11
+Llama  Q5_0  0      193     2.801  0.1392 1.502e-02 5.833e-03 +9.106e-03
+Llama  Q5_0  4      193     2.801  0.1392 5.822e-03 5.833e-03 +2.922e-06
+Llama  Q8_0  0      193     2.787  0.1427 5.666e-03 5.671e-03 +2.049e-06
+Llama  Q8_0  4      193     2.787  0.1427 5.666e-03 5.671e-03 +2.049e-06
+
+P1 initial error: median excess Q4_0 f0  Qwen 8.576e-03  Llama 8.654e-03  ratio 0.99 (>= 2) -> FAILS
+P2 association: Spearman rho(crest_median, excess) over 442 matmuls = 0.301 (>= 0.5) -> FAILS
+P3 intervention at c=5: Qwen excess 8.576e-03 -> 8.529e-03 (x1.01, need >= 2); Llama 8.654e-03 -> 8.654e-03 (x1.00, need < 1.5) -> FAILS
+P4 propagation: last/first layer divergence  Qwen 0.81  Llama 1.62  ratio 0.50 (>= 2) -> FAILS
+
+Decision (frozen rule):
+  H REJECTED (P1 fails). P4 fails: report the model dependence as unexplained.

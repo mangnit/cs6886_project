@@ -1,0 +1,17 @@
+[06:53:15] plan=explain matmul_flags=[] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=Q8_0,Q4_0,Q4_1,Q5_0,Q5_1,Q4_K,Q5_K,Q6_K,Q3_K,Q2_K mixes=Q4_K,Q3_K src=https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-f16.gguf
+[06:53:49] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -> rc=0 
+[06:53:50] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 42, 13.33 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 42, 9.85 W, 70.00 W, 0x0000000000000001']
+[06:54:40] downloaded 1 part(s) of Llama-3.2-3B-Instruct-f16.gguf in 51s
+[06:55:21] real_replay Q4_0 flags=0 rc=0 12s 
+[06:55:23] kv_bisect Q4_0 flags=0 prompt=0 rc=0 
+[06:55:24] kv_bisect Q4_0 flags=0 prompt=1 rc=0 
+[06:55:26] kv_bisect Q4_0 flags=0 prompt=2 rc=0 
+[06:55:38] real_replay Q4_0 flags=4 rc=0 12s 
+[06:55:39] kv_bisect Q4_0 flags=4 prompt=0 rc=0 
+[06:55:41] kv_bisect Q4_0 flags=4 prompt=1 rc=0 
+[06:55:42] kv_bisect Q4_0 flags=4 prompt=2 rc=0 
+[06:56:24] real_replay Q5_0 flags=0 rc=0 13s 
+[06:56:36] real_replay Q5_0 flags=4 rc=0 12s 
+[06:57:22] real_replay Q8_0 flags=0 rc=0 14s 
+[06:57:35] real_replay Q8_0 flags=4 rc=0 14s 
+[06:57:36] done

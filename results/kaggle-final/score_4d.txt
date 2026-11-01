@@ -1,0 +1,14 @@
+C1  I9 removes M7 (operator, Q4_1/Q5_1 delta median at flags 128 <= 1e-6; falsified if > 1e-5)
+    q4_1: 6.96e-04 -> 1.84e-07 (max 3.23e-04)  pass
+    q5_1: 7.29e-04 -> 1.84e-07 (max 3.24e-04)  pass
+C2  I10 lowers Q4_1/Q5_1 error vs FP64 on both paths to <= 1.2e-2 (falsified if either > 1.35e-2)
+    q4_1: alone/batch 1.549e-02/1.546e-02 -> 1.083e-02/1.077e-02  pass
+    q5_1: alone/batch 1.548e-02/1.545e-02 -> 1.091e-02/1.083e-02  pass
+C3  M8 test, end to end: I9 alone stays >= 0.6 (falsified if <= 0.45), I9+I10 falls to <= 0.45 (falsified if > 0.45)
+    Q4_1: flags0 0.814 (13 flips) | I9 0.788 (8) pass | I9+I10 0.349 (7) pass
+    Q5_1: flags0 0.814 (16 flips) | I9 0.787 (9) pass | I9+I10 0.338 (5) pass
+C4  costs: median [IQR] over 5 ABBA-interleaved repeats, each repeat = medians over 8 prompts
+    Q4_K flags 64 prefill: 79.424 [78.786, 80.181] -> 79.677 [77.874, 80.008] ms  (+0.3%)  pass (<= 3%)
+    Q4_1 flags 256 prefill: 80.437 [79.837, 81.035] -> 80.170 [79.917, 82.994] ms  (-0.3%)  pass (<= 3%)
+    Q4_0 flags 4 decode: 5.989 [5.982, 5.996] -> 6.217 [6.205, 6.257] ms  (+3.8%)  outside expected range
+    Q5_0 flags 4 decode: 6.870 [6.834, 6.906] -> 7.179 [7.140, 7.238] ms  (+4.5%)  as expected (+4..+10%)

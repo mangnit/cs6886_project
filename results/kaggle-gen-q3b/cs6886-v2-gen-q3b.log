@@ -1,0 +1,61 @@
+[{"stream_name":"stdout","time":0.616775654,"data":"[03:17:19] plan=gen matmul_flags=[] kv_flags=['0', '4'] ppl_flags=['0', '4'] ppl_chunks=24 formats=Q8_0,Q4_0,Q5_0,Q4_1,Q5_1,Q4_K,Q5_K,Q6_K mixes=Q4_K src=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00001-of-00002.gguf,https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-fp16-00002-of-00002.gguf\n"}
+,{"stream_name":"stdout","time":104.64556012,"data":"[03:19:03] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -\u003e rc=0 \n"}
+,{"stream_name":"stdout","time":105.711719841,"data":"[03:19:04] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 38, 10.26 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 39, 10.46 W, 70.00 W, 0x0000000000000001']\n"}
+,{"stream_name":"stdout","time":406.92633105,"data":"[03:24:05] downloaded 2 part(s) of qwen2.5-3b-instruct-fp16-00001-of-00002.gguf in 301s\n"}
+,{"stream_name":"stdout","time":425.329907563,"data":"[03:24:24] kv_paths Q3B_F16 flags=0 rc=0 17s clocks[1590 MHz, 50, 36.86 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":648.86754256,"data":"[03:28:07] ppl_paths Q3B_F16 flags=0 rc=0 223s clocks[1590 MHz, 77, 52.07 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":931.503906856,"data":"[03:32:50] ppl_paths Q3B_F16_cublas_f32 flags=0 rc=0 283s clocks[1590 MHz, 75, 46.82 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":966.596112599,"data":"[03:33:25] kv_paths Q3B_F16_cublas_f32 flags=0 rc=0 35s clocks[1590 MHz, 77, 49.51 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":999.891321022,"data":"[03:33:58] quantized Q3B_Q8_0 in 33s (3.62 GB)\n"}
+,{"stream_name":"stdout","time":1018.406924333,"data":"[03:34:17] kv_paths Q3B_Q8_0 flags=0 rc=0 18s clocks[1590 MHz, 72, 45.93 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1031.68851846,"data":"[03:34:30] kv_paths Q3B_Q8_0 flags=4 rc=0 13s clocks[1590 MHz, 75, 47.38 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1182.124433812,"data":"[03:37:01] ppl_paths Q3B_Q8_0 flags=4 rc=0 150s clocks[1590 MHz, 75, 47.48 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1328.553218446,"data":"[03:39:27] ppl_paths Q3B_Q8_0 flags=0 rc=0 146s clocks[1545 MHz, 76, 46.23 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1356.481020031,"data":"[03:39:55] quantized Q3B_Q4_0 in 28s (1.92 GB)\n"}
+,{"stream_name":"stdout","time":1366.89701663,"data":"[03:40:05] kv_paths Q3B_Q4_0 flags=4 rc=0 10s clocks[1590 MHz, 71, 44.28 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1376.670285811,"data":"[03:40:15] kv_paths Q3B_Q4_0 flags=0 rc=0 10s clocks[1515 MHz, 73, 45.54 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1479.555350183,"data":"[03:41:58] ppl_paths Q3B_Q4_0 flags=0 rc=0 103s clocks[1590 MHz, 77, 49.42 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1594.009086227,"data":"[03:43:52] ppl_paths Q3B_Q4_0 flags=4 rc=0 114s clocks[1305 MHz, 76, 39.80 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1624.752142249,"data":"[03:44:23] quantized Q3B_Q5_0 in 31s (2.34 GB)\n"}
+,{"stream_name":"stdout","time":1636.834137917,"data":"[03:44:35] kv_paths Q3B_Q5_0 flags=4 rc=0 12s clocks[1590 MHz, 72, 45.64 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1648.148311067,"data":"[03:44:47] kv_paths Q3B_Q5_0 flags=0 rc=0 11s clocks[1575 MHz, 75, 45.44 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1774.398753413,"data":"[03:46:53] ppl_paths Q3B_Q5_0 flags=0 rc=0 126s clocks[1395 MHz, 76, 42.81 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1912.685884606,"data":"[03:49:11] ppl_paths Q3B_Q5_0 flags=4 rc=0 138s clocks[1305 MHz, 76, 42.91 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1939.544131249,"data":"[03:49:38] quantized Q3B_Q4_1 in 27s (2.13 GB)\n"}
+,{"stream_name":"stdout","time":1949.364600423,"data":"[03:49:48] kv_paths Q3B_Q4_1 flags=4 rc=0 10s clocks[1590 MHz, 72, 45.74 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":1959.120136405,"data":"[03:49:58] kv_paths Q3B_Q4_1 flags=0 rc=0 10s clocks[1500 MHz, 75, 46.13 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2058.098439046,"data":"[03:51:37] ppl_paths Q3B_Q4_1 flags=4 rc=0 99s clocks[1590 MHz, 78, 50.30 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2157.10503464,"data":"[03:53:16] ppl_paths Q3B_Q4_1 flags=0 rc=0 99s clocks[1590 MHz, 77, 50.79 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2189.401037499,"data":"[03:53:48] quantized Q3B_Q5_1 in 32s (2.55 GB)\n"}
+,{"stream_name":"stdout","time":2200.205605341,"data":"[03:53:59] kv_paths Q3B_Q5_1 flags=4 rc=0 11s clocks[1590 MHz, 71, 45.44 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2210.8913213,"data":"[03:54:09] kv_paths Q3B_Q5_1 flags=0 rc=0 11s clocks[1590 MHz, 74, 47.77 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2327.554354775,"data":"[03:56:06] ppl_paths Q3B_Q5_1 flags=4 rc=0 117s clocks[1485 MHz, 78, 45.44 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2442.199693214,"data":"[03:58:01] ppl_paths Q3B_Q5_1 flags=0 rc=0 115s clocks[1590 MHz, 76, 47.67 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2635.009502604,"data":"[04:01:13] quantized Q3B_Q4_K in 193s (1.92 GB)\n"}
+,{"stream_name":"stdout","time":2644.537017351,"data":"[04:01:23] kv_paths Q3B_Q4_K flags=4 rc=0 9s clocks[1590 MHz, 58, 39.80 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2653.937974022,"data":"[04:01:32] kv_paths Q3B_Q4_K flags=0 rc=0 9s clocks[1590 MHz, 61, 41.38 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2764.383416685,"data":"[04:03:23] ppl_paths Q3B_Q4_K flags=0 rc=0 110s clocks[1335 MHz, 75, 42.44 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":2879.350127606,"data":"[04:05:18] ppl_paths Q3B_Q4_K flags=4 rc=0 115s clocks[1500 MHz, 77, 45.15 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3040.50931291,"data":"[04:07:59] quantized Q3B_Q5_K in 161s (2.34 GB)\n"}
+,{"stream_name":"stdout","time":3050.955591645,"data":"[04:08:09] kv_paths Q3B_Q5_K flags=0 rc=0 10s clocks[1590 MHz, 59, 41.95 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3061.228542805,"data":"[04:08:20] kv_paths Q3B_Q5_K flags=4 rc=0 10s clocks[1590 MHz, 62, 40.37 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3192.337791044,"data":"[04:10:31] ppl_paths Q3B_Q5_K flags=0 rc=0 131s clocks[1395 MHz, 73, 40.96 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3333.95409442,"data":"[04:12:52] ppl_paths Q3B_Q5_K flags=4 rc=0 142s clocks[1155 MHz, 75, 36.76 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3417.432111014,"data":"[04:14:16] quantized Q3B_Q6_K in 83s (2.79 GB)\n"}
+,{"stream_name":"stdout","time":3430.731074811,"data":"[04:14:29] kv_paths Q3B_Q6_K flags=4 rc=0 13s clocks[1590 MHz, 66, 42.14 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3444.640329797,"data":"[04:14:43] kv_paths Q3B_Q6_K flags=0 rc=0 14s clocks[1590 MHz, 70, 44.28 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3626.073762291,"data":"[04:17:45] ppl_paths Q3B_Q6_K flags=0 rc=0 181s clocks[1245 MHz, 75, 36.67 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3810.014477433,"data":"[04:20:48] ppl_paths Q3B_Q6_K flags=4 rc=0 184s clocks[1230 MHz, 76, 38.52 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3978.793308806,"data":"[04:23:37] quantized Q3B_Q4_K_M in 169s (2.10 GB)\n"}
+,{"stream_name":"stdout","time":3988.987695731,"data":"[04:23:47] kv_paths Q3B_Q4_K_M flags=0 rc=0 10s clocks[1500 MHz, 59, 39.31 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":3999.10180953,"data":"[04:23:58] kv_paths Q3B_Q4_K_M flags=4 rc=0 10s clocks[1500 MHz, 62, 40.00 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":4124.059544336,"data":"[04:26:03] ppl_paths Q3B_Q4_K_M flags=4 rc=0 125s clocks[1380 MHz, 73, 41.06 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":4261.585267385,"data":"[04:28:20] ppl_paths Q3B_Q4_K_M flags=0 rc=0 137s clocks[1260 MHz, 76, 39.90 W, 0x0000000000000000] \n"}
+,{"stream_name":"stdout","time":4261.774448326,"data":"[04:28:20] done\n"}
+,{"stream_name":"stderr","time":4263.783200515,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4263.783228673,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4264.032360152,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4264.032396217,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4264.902003263,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4265.947382197,"data":"[NbConvertApp] Writing 352828 bytes to __results__.html\n"}
+]

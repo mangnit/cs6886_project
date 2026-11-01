@@ -1,0 +1,25 @@
+[{"stream_name":"stdout","time":0.853095302,"data":"[13:21:52] plan=episodes matmul_flags=[] kv_flags=['0', '4', '15', '16', '31'] ppl_flags=['0', '4', '16'] ppl_chunks=8 formats=F16,Q8_0,Q4_K_M,Q4_0 mixes=Q4_K,Q3_K src=https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-f16.gguf\n"}
+,{"stream_name":"stdout","time":30.099000756,"data":"[13:22:21] pip nvidia-cublas-cu12==12.6.0.22 nvidia-cuda-runtime-cu12==12.6.37 -\u003e rc=0 \n"}
+,{"stream_name":"stdout","time":31.273277928,"data":"[13:22:22] GPU: ['Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 40, 9.44 W, 70.00 W, 0x0000000000000001', 'Tesla T4, 580.178.04, 7.5, 300 MHz, 1590 MHz, 405 MHz, 41, 10.72 W, 70.00 W, 0x0000000000000001']\n"}
+,{"stream_name":"stdout","time":123.300607349,"data":"[13:23:55] downloaded 1 part(s) of Llama-3.2-3B-Instruct-f16.gguf in 92s\n"}
+,{"stream_name":"stdout","time":124.049172119,"data":"[13:23:55] episodes: 80 x 4 requests, n_predict=384, follow-ups=('Thank you. Now summarize everything you have said so far in three sentences.', 'Finally, list three questions a curious reader might ask next, each with a one-line answer.')\n"}
+,{"stream_name":"stdout","time":2159.012357001,"data":"[13:57:50] episodes L3B_F16 flags=0 arm=cache ok 2035s clocks[300 MHz, 39, 9.44 W, 0x0000000000000001] -\u003e [1590 MHz, 76, 47.63 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":4263.944140996,"data":"[14:32:55] episodes L3B_F16 flags=0 arm=recompute ok 2105s clocks[1590 MHz, 76, 43.93 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 43.20 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":5580.850146253,"data":"[14:54:52] episodes L3B_Q8_0 flags=0 arm=cache ok 1285s clocks[300 MHz, 65, 11.33 W, 0x0000000000000001] -\u003e [1590 MHz, 75, 42.81 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":6933.713441468,"data":"[15:17:25] episodes L3B_Q8_0 flags=0 arm=recompute ok 1353s clocks[1590 MHz, 75, 43.59 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 45.70 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":8221.307027369,"data":"[15:38:53] episodes L3B_Q4_K_M flags=0 arm=cache ok 1108s clocks[300 MHz, 52, 12.89 W, 0x0000000000000001] -\u003e [1590 MHz, 77, 43.07 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":9401.023397393,"data":"[15:58:32] episodes L3B_Q4_K_M flags=0 arm=recompute ok 1180s clocks[1590 MHz, 77, 43.07 W, 0x0000000000000000] -\u003e [1485 MHz, 76, 40.84 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":10519.371087882,"data":"[16:17:11] episodes L3B_Q4_K_M flags=384 arm=cache ok 1118s clocks[1485 MHz, 76, 40.84 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 43.96 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":11704.164935016,"data":"[16:36:55] episodes L3B_Q4_K_M flags=384 arm=recompute ok 1185s clocks[1590 MHz, 76, 43.96 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 46.19 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":12567.913806594,"data":"[16:51:19] episodes L3B_Q4_0 flags=0 arm=cache ok 836s clocks[300 MHz, 65, 15.37 W, 0x0000000000000001] -\u003e [1590 MHz, 76, 43.98 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":13448.164791931,"data":"[17:05:59] episodes L3B_Q4_0 flags=0 arm=recompute ok 880s clocks[1590 MHz, 76, 43.98 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 44.47 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":14267.87897945,"data":"[17:19:39] episodes L3B_Q4_0 flags=384 arm=cache ok 820s clocks[1590 MHz, 76, 44.08 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 43.39 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":15148.20744025,"data":"[17:34:19] episodes L3B_Q4_0 flags=384 arm=recompute ok 880s clocks[1590 MHz, 76, 43.39 W, 0x0000000000000000] -\u003e [1590 MHz, 76, 44.45 W, 0x0000000000000000]\n"}
+,{"stream_name":"stdout","time":15148.397136857,"data":"[17:34:20] done\n"}
+,{"stream_name":"stderr","time":15151.097671171,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":15151.097716221,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":15151.494721902,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":15151.494753224,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":15152.816489326,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15154.266512633,"data":"[NbConvertApp] Writing 443111 bytes to __results__.html\n"}
+]

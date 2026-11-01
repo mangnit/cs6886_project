@@ -1,0 +1,5 @@
+# Python 3 (tested with 3.12). The scorers and the job script use only the standard library.
+matplotlib>=3.8   # probes/make_report.py (figures); tested with 3.11.1
+
+# Optional: only for running experiments on Kaggle (runners/kaggle_v2.py); tested with 2.2.4
+# kaggle
